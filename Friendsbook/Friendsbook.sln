@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Friendsbook", "Friendsbook\Friendsbook.csproj", "{E16028C9-11AB-4370-93A3-BFB8D6E4431A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Friendsbook.Core", "Friendsbook.Core\Friendsbook.Core.csproj", "{31D66F5D-18C2-4EA3-B567-BEE6A380DACB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{E16028C9-11AB-4370-93A3-BFB8D6E4431A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E16028C9-11AB-4370-93A3-BFB8D6E4431A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E16028C9-11AB-4370-93A3-BFB8D6E4431A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{31D66F5D-18C2-4EA3-B567-BEE6A380DACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D66F5D-18C2-4EA3-B567-BEE6A380DACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D66F5D-18C2-4EA3-B567-BEE6A380DACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D66F5D-18C2-4EA3-B567-BEE6A380DACB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
