@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Friendsbook.Pages.FriendFormPage"
+             Title="FriendFormPage">
+    <ContentPage.Resources>
+        <Style TargetType="Line" x:Key="SpacerLine">
+            <Setter Property="Aspect" Value="Uniform" />
+            <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray600}}" />
+            <Setter Property="HeightRequest" Value="2" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout x:Name="FriendFormGrid">
+
+        <Grid Margin="5, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="155" x:Name="HeaderColumnDefintion"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Name" VerticalOptions="Center"/>
+            <VerticalStackLayout Grid.Column="1">
+                <Entry Placeholder="First" Text="{Binding Friend.Firstname}" Margin="0, 0, 0, 15"/>
+
+                <Entry Placeholder="Last" Text="{Binding Friend.Lastname}"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Line X1="0" 
+              X2="{Binding Source={x:Reference FriendFormGrid}, Path=Width, Mode=OneWay}" 
+              Margin="20, 15"
+              Style="{StaticResource SpacerLine}"
+              />
+
+        <Grid Margin="5, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Source={x:Reference HeaderColumnDefintion}, Path=Width,Mode=OneTime}"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Birthdate" VerticalOptions="Center" />
+            <VerticalStackLayout Grid.Column="1">
+                <Entry Placeholder="DD/MM/YYYY" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <Line X1="0" 
+              X2="{Binding Source={x:Reference FriendFormGrid}, Path=Width, Mode=OneWay}" 
+              Margin="20, 15"
+              Style="{StaticResource SpacerLine}"
+              />
+
+        <Grid Margin="5, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Source={x:Reference HeaderColumnDefintion}, Path=Width,Mode=OneTime}"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Contact information" VerticalOptions="Center" />
+            <VerticalStackLayout Grid.Column="1">
+                <Entry Placeholder="Phone number" 
+                       Text="{Binding Friend.PhoneNumber}"
+                       Keyboard="Telephone"
+                       Margin="0, 0, 0, 15"/>
+
+                <Entry Placeholder="E-Mail" 
+                       Keyboard="Email"
+                       Text="{Binding Friend.Email}"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Line X1="0" 
+              X2="{Binding Source={x:Reference FriendFormGrid}, Path=Width, Mode=OneWay}" 
+              Margin="20, 15"
+              Style="{StaticResource SpacerLine}"
+              />
+
+        <Grid Margin="5, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding Source={x:Reference HeaderColumnDefintion}, Path=Width,Mode=OneTime}"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Address" VerticalOptions="Center" />
+            <VerticalStackLayout Grid.Column="1">
+                <Entry Placeholder="House number" 
+                       Keyboard="Numeric"
+                       Text="{Binding Friend.HouseNumber}"  
+                       Margin="0, 0, 0, 15"/>
+
+                <Entry Placeholder="Street" 
+                       Text="{Binding Friend.Street}"  
+                       Margin="0, 0, 0, 15"/>
+
+                <Entry Placeholder="City" 
+                       Text="{Binding Friend.City}"  
+                       Margin="0, 0, 0, 15"/>
+
+                <Entry Placeholder="Country" 
+                       Text="{Binding Friend.Country}"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Line X1="0" 
+              X2="{Binding Source={x:Reference FriendFormGrid}, Path=Width, Mode=OneWay}" 
+              Margin="20, 15"
+              Style="{StaticResource SpacerLine}"
+              />
+
+        <ListView ItemsSource="{Binding ValidationMessages}" Background="Red" IsVisible="{Binding HasValidationMessage}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding}" TextColor="White"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Margin="5, 20, 5, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Text="Cancel" Margin="0, 0, 5, 0"/>
+
+            <Button Grid.Column="1" 
+                    Text="{Binding SubmitButtonText}" 
+                    Margin="5, 0, 0, 0"
+                    Command="{Binding SubmitButtonCommand}"/>
+        </Grid>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -21,4 +21,8 @@
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Friendsbook.Persistence\Friendsbook.Persistence.csproj" />
+	</ItemGroup>
+
 </Project>

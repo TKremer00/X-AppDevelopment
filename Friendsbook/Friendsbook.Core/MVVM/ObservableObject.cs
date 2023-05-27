@@ -7,6 +7,7 @@ namespace Friendsbook.Core.MVVM
         public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             OnPropertyChanging(propertyName);
+            OnPropertyChanged(propertyName);
         }
     }
 }
