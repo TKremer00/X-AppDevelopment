@@ -25,4 +25,8 @@
 	  <ProjectReference Include="..\Friendsbook.Persistence\Friendsbook.Persistence.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ValidationModels\" />
+	</ItemGroup>
+
 </Project>

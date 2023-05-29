@@ -9,6 +9,12 @@
             <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray600}}" />
             <Setter Property="HeightRequest" Value="2" />
         </Style>
+
+        <DataTemplate x:Key="ErrorTemplate">
+            <ViewCell>
+                <Label Text="{Binding}" TextColor="White" Background="Red" />
+            </ViewCell>
+        </DataTemplate>
     </ContentPage.Resources>
 
     <VerticalStackLayout x:Name="FriendFormGrid">
@@ -21,9 +27,35 @@
 
             <Label Grid.Column="0" Text="Name" VerticalOptions="Center"/>
             <VerticalStackLayout Grid.Column="1">
-                <Entry Placeholder="First" Text="{Binding Friend.Firstname}" Margin="0, 0, 0, 15"/>
+                <Entry Placeholder="First" Text="{Binding Friend.Firstname}" Margin="0, 0, 0, 15">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsFirstnameValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
 
-                <Entry Placeholder="Last" Text="{Binding Friend.Lastname}"/>
+                <ListView ItemsSource="{Binding Friend.FirstnameErrors}" 
+                          IsVisible="{Binding Friend.IsFirstnameValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                          ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
+
+                <Entry Placeholder="Last" Text="{Binding Friend.Lastname}">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsLastnameValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+
+                <ListView ItemsSource="{Binding Friend.LastnameErrors}" 
+                          IsVisible="{Binding Friend.IsLastnameValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                          ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
             </VerticalStackLayout>
         </Grid>
 
@@ -41,7 +73,20 @@
 
             <Label Grid.Column="0" Text="Birthdate" VerticalOptions="Center" />
             <VerticalStackLayout Grid.Column="1">
-                <Entry Placeholder="DD/MM/YYYY" />
+                <DatePicker>
+                    <DatePicker.Triggers>
+                        <DataTrigger TargetType="DatePicker"
+                             Binding="{Binding Friend.IsBirthdateValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </DatePicker.Triggers>
+                </DatePicker>
+
+                <ListView ItemsSource="{Binding Friend.BirthdateErrors}" 
+                          IsVisible="{Binding Friend.IsBirthdateValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                          ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
             </VerticalStackLayout>
         </Grid>
 
@@ -62,11 +107,36 @@
                 <Entry Placeholder="Phone number" 
                        Text="{Binding Friend.PhoneNumber}"
                        Keyboard="Telephone"
-                       Margin="0, 0, 0, 15"/>
+                       Margin="0, 0, 0, 15">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsPhoneNumberValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <ListView ItemsSource="{Binding Friend.PhoneNumberErrors}" 
+                          IsVisible="{Binding Friend.IsPhoneNumberValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                          ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
 
                 <Entry Placeholder="E-Mail" 
                        Keyboard="Email"
-                       Text="{Binding Friend.Email}"/>
+                       Text="{Binding Friend.Email}">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsEmailValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+
+                <ListView ItemsSource="{Binding Friend.EmailErrors}" 
+                          IsVisible="{Binding Friend.IsEmailValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                          ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
             </VerticalStackLayout>
         </Grid>
 
@@ -87,18 +157,70 @@
                 <Entry Placeholder="House number" 
                        Keyboard="Numeric"
                        Text="{Binding Friend.HouseNumber}"  
-                       Margin="0, 0, 0, 15"/>
+                       Margin="0, 0, 0, 15">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsHouseNumberValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                
+                <ListView ItemsSource="{Binding Friend.HouseNumberErrors}" 
+                        IsVisible="{Binding Friend.IsHouseNumberValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                        ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
 
                 <Entry Placeholder="Street" 
                        Text="{Binding Friend.Street}"  
-                       Margin="0, 0, 0, 15"/>
+                       Margin="0, 0, 0, 15">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsStreetValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+
+                <ListView ItemsSource="{Binding Friend.StreetErrors}" 
+                        IsVisible="{Binding Friend.IsStreetValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                        ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
 
                 <Entry Placeholder="City" 
                        Text="{Binding Friend.City}"  
-                       Margin="0, 0, 0, 15"/>
+                       Margin="0, 0, 0, 15">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsCityValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+
+                <ListView ItemsSource="{Binding Friend.CityErrors}" 
+                        IsVisible="{Binding Friend.IsCityValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                        ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
 
                 <Entry Placeholder="Country" 
-                       Text="{Binding Friend.Country}"/>
+                       Text="{Binding Friend.Country}">
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry"
+                             Binding="{Binding Friend.IsCountryValid}"
+                             Value="False">
+                            <Setter Property="BackgroundColor" Value="Red" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+
+                <ListView ItemsSource="{Binding Friend.CountryErrors}" 
+                        IsVisible="{Binding Friend.IsCountryValid, Converter={StaticResource InvertedBooleanConverter}}" 
+                        ItemTemplate="{StaticResource ErrorTemplate}">
+                </ListView>
             </VerticalStackLayout>
         </Grid>
 
@@ -107,16 +229,6 @@
               Margin="20, 15"
               Style="{StaticResource SpacerLine}"
               />
-
-        <ListView ItemsSource="{Binding ValidationMessages}" Background="Red" IsVisible="{Binding HasValidationMessage}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label Text="{Binding}" TextColor="White"/>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
         <Grid Margin="5, 20, 5, 0">
             <Grid.ColumnDefinitions>

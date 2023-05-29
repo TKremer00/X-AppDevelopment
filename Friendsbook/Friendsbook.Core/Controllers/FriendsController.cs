@@ -1,35 +1,30 @@
 ﻿using Friendsbook.Core.Responses;
-using Friendsbook.Core.Validators;
+using Friendsbook.Core.ValidationModels;
 using Friendsbook.Persistence;
-using Friendsbook.Persistence.Models;
 
 namespace Friendsbook.Core.Controllers
 {
     public class FriendsController
     {
         private FriendsbookContext _context;
-        private IModelValidator<Friend> _validator;
 
         public FriendsController(FriendsbookContext context)
         {
             _context = context;
-            _validator = new ValidateFriend();
         }
 
-        public IResponse SaveFriend(Friend friend)
+        public IResponse SaveFriend(FriendValidationModel validatedFriend)
         {
-            var validationMessages = ValidateFriend(friend);
-            if (validationMessages.Any())
+#if DEBUG
+            if (!validatedFriend.IsValid)
             {
-                return new ErrorResponse(validationMessages);
+                throw new ArgumentException("The friend must be valid");
             }
+#endif
+            // TODO: save the friend to the database
+            var friend = validatedFriend.ConvertToFriend();
 
             return new SuccessResponse();
-        }
-
-        private string[] ValidateFriend(Friend friend)
-        {
-            return _validator.Validate(friend);
         }
     }
 }

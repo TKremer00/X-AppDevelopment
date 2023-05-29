@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Friendsbook.Core.Controllers;
 using Friendsbook.Core.MVVM;
+using Friendsbook.Core.ValidationModels;
 using Friendsbook.Persistence.Models;
 
 namespace Friendsbook.ViewModels
@@ -16,12 +17,12 @@ namespace Friendsbook.ViewModels
 
         public FriendFormPageViewModel(Friend friend, FriendsController friendsController)
         {
-            Friend = friend;
+            Friend = new FriendValidationModel(friend);
             _friendsController = friendsController;
             SubmitButtonCommand = new RelayCommand(HandleSubmitButtonCommand);
         }
 
-        public Friend Friend { get; }
+        public FriendValidationModel Friend { get; }
 
         public string SubmitButtonText => Friend.Id == 0 ? "Create" : "Update";
 
@@ -43,14 +44,12 @@ namespace Friendsbook.ViewModels
 
         private void HandleSubmitButtonCommand()
         {
-            var response = _friendsController.SaveFriend(Friend);
-
-            if (response.IsSuccess)
+            if (!Friend.IsValid)
             {
                 return;
             }
 
-            ValidationMessages = response.ErrorMessages;
+            _friendsController.SaveFriend(Friend);
         }
     }
 }
