@@ -1,7 +1,7 @@
 ﻿using Friendsbook.Core.MVVM;
 using Friendsbook.Persistence.Models;
 
-namespace Friendsbook.ViewModels
+namespace Friendsbook.Views
 {
     internal class FriendsViewModel : ObservableObject
     {

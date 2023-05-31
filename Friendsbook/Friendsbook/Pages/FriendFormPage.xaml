@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:Friendsbook.ViewModels"
              x:Class="Friendsbook.Pages.FriendFormPage"
+             x:DataType="viewModels:FriendFormPageViewModel"
              Title="FriendFormPage">
     <ContentPage.Resources>
         <Style TargetType="Line" x:Key="SpacerLine">
@@ -19,13 +21,42 @@
 
     <VerticalStackLayout x:Name="FriendFormGrid">
 
-        <Grid Margin="5, 0">
+        <Grid Margin="5, 10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="155" x:Name="HeaderColumnDefintion"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <Label Grid.Column="0" Text="Photo" VerticalOptions="Center"/>
+
+            <VerticalStackLayout Grid.Column="1" 
+                                 WidthRequest="60"
+                                 HeightRequest="60"
+                                 HorizontalOptions="Center">
+                <Button Text="+"
+                        FontSize="45"
+                        CornerRadius="360" 
+                        Padding="0" 
+                        Margin="0"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+                        BackgroundColor="Transparent"
+                        IsVisible="{Binding HasProfilePicture, Converter={StaticResource InvertedBooleanConverter}}"
+                        Command="{Binding TakePhotoCommand}" />
+
+                <Frame CornerRadius="360" IsVisible="{Binding HasProfilePicture}">
+                    <Image Aspect="AspectFit" Source="{Binding Friend.Image}"/>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Grid Margin="5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="155"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
             <Label Grid.Column="0" Text="Name" VerticalOptions="Center"/>
+            
             <VerticalStackLayout Grid.Column="1">
                 <Entry Placeholder="First" Text="{Binding Friend.Firstname}" Margin="0, 0, 0, 15">
                     <Entry.Triggers>
@@ -54,37 +85,6 @@
 
                 <ListView ItemsSource="{Binding Friend.LastnameErrors}" 
                           IsVisible="{Binding Friend.IsLastnameValid, Converter={StaticResource InvertedBooleanConverter}}" 
-                          ItemTemplate="{StaticResource ErrorTemplate}">
-                </ListView>
-            </VerticalStackLayout>
-        </Grid>
-
-        <Line X1="0" 
-              X2="{Binding Source={x:Reference FriendFormGrid}, Path=Width, Mode=OneWay}" 
-              Margin="20, 15"
-              Style="{StaticResource SpacerLine}"
-              />
-
-        <Grid Margin="5, 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding Source={x:Reference HeaderColumnDefintion}, Path=Width,Mode=OneTime}"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Column="0" Text="Birthdate" VerticalOptions="Center" />
-            <VerticalStackLayout Grid.Column="1">
-                <DatePicker>
-                    <DatePicker.Triggers>
-                        <DataTrigger TargetType="DatePicker"
-                             Binding="{Binding Friend.IsBirthdateValid}"
-                             Value="False">
-                            <Setter Property="BackgroundColor" Value="Red" />
-                        </DataTrigger>
-                    </DatePicker.Triggers>
-                </DatePicker>
-
-                <ListView ItemsSource="{Binding Friend.BirthdateErrors}" 
-                          IsVisible="{Binding Friend.IsBirthdateValid, Converter={StaticResource InvertedBooleanConverter}}" 
                           ItemTemplate="{StaticResource ErrorTemplate}">
                 </ListView>
             </VerticalStackLayout>
@@ -236,7 +236,10 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Text="Cancel" Margin="0, 0, 5, 0"/>
+            <Button Grid.Column="0" 
+                    Text="Cancel"
+                    Margin="0, 0, 5, 0"
+                    Command="{Binding CancelButtonCommand}"/>
 
             <Button Grid.Column="1" 
                     Text="{Binding SubmitButtonText}" 

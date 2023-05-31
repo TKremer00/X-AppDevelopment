@@ -22,8 +22,6 @@
 
         public string Email { get; set; } = null!;
 
-        public DateOnly Birthdate { get; set; }
-
         public string FullName => $"{Firstname} {Lastname}";
     }
 }

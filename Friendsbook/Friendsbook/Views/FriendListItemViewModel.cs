@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Friendsbook.Core.MVVM;
-using Friendsbook.Pages;
 using Friendsbook.Persistence.Models;
 
-namespace Friendsbook.ViewModels
+namespace Friendsbook.Views
 {
     internal class FriendListItemViewModel : ObservableObject
     {
@@ -21,7 +20,7 @@ namespace Friendsbook.ViewModels
 
         private void HandleClickCommand()
         {
-            Application.Current.MainPage = new NavigationPage(new FriendDetailPage(Friend.Id));
+            // Application.Current.MainPage = new NavigationPage(new FriendDetailPage(Friend.Id));
         }
     }
 }

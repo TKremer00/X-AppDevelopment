@@ -1,19 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Friendsbook.Core.Controllers;
+using Friendsbook.Core.Helpers;
 using Friendsbook.Core.MVVM;
 using Friendsbook.Pages;
 
 namespace Friendsbook.ViewModels
 {
-    internal class MainPageViewModel : ObservableObject
+    public class MainPageViewModel : ObservableObject
     {
-        private readonly FriendsController _friendController;
-
-        public MainPageViewModel()
+        public MainPageViewModel(FriendsController friendsController)
         {
-            //TODO: fix context
-            _friendController = new FriendsController(null);
-
             AddCommand = new RelayCommand(HandleAddCommand);
         }
 
@@ -21,7 +17,7 @@ namespace Friendsbook.ViewModels
 
         private void HandleAddCommand()
         {
-            Application.Current.MainPage = new NavigationPage(new FriendFormPage(_friendController));
+            NavigationHelper.Navigate<FriendFormPage>();
         }
 
     }

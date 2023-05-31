@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using Friendsbook.Core.Controllers;
+using Friendsbook.Pages;
 using Friendsbook.Persistence;
 using Friendsbook.Persistence.Repositories;
+using Friendsbook.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -40,7 +42,17 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddScoped<RepositoryManager>();
         mauiAppBuilder.Services.AddScoped<FriendRepository>();
 
+        // Controllers
         mauiAppBuilder.Services.AddScoped<FriendsController>();
+
+        // Pages
+        mauiAppBuilder.Services.AddSingleton<MainPage>();
+        mauiAppBuilder.Services.AddSingleton<FriendFormPage>();
+
+        // View Models
+        mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
+        mauiAppBuilder.Services.AddSingleton<FriendFormPageViewModel>();
+
 
         return mauiAppBuilder;
     }

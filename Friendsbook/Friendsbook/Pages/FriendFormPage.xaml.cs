@@ -1,13 +1,12 @@
-using Friendsbook.Core.Controllers;
 using Friendsbook.ViewModels;
 
 namespace Friendsbook.Pages;
 
 public partial class FriendFormPage : ContentPage
 {
-    public FriendFormPage(FriendsController friendsController)
+    public FriendFormPage(FriendFormPageViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = new FriendFormPageViewModel(friendsController);
+        BindingContext = viewModel;
     }
 }

@@ -15,7 +15,6 @@ namespace Friendsbook.Core.ValidationModels
         private string _country;
         private string _phoneNumber;
         private string _email;
-        private DateOnly _birthdate;
 
         public FriendValidationModel()
         {
@@ -32,7 +31,6 @@ namespace Friendsbook.Core.ValidationModels
             Country = friend.Country;
             PhoneNumber = friend.PhoneNumber;
             Email = friend.Email;
-            Birthdate = friend.Birthdate;
         }
 
         public int Id { get; set; }
@@ -196,22 +194,6 @@ namespace Friendsbook.Core.ValidationModels
 
         public bool IsEmailValid => !EmailErrors.Any();
 
-        [Required]
-        public DateOnly Birthdate
-        {
-            get => _birthdate;
-            set
-            {
-                SetProperty(ref _birthdate, value, true);
-                OnPropertyChanged(nameof(BirthdateErrors));
-                OnPropertyChanged(nameof(IsBirthdateValid));
-            }
-        }
-
-        public IEnumerable<ValidationResult> BirthdateErrors => GetErrors(nameof(Birthdate));
-
-        public bool IsBirthdateValid => !BirthdateErrors.Any();
-
         internal Friend ConvertToFriend()
         {
             return new Friend
@@ -225,7 +207,6 @@ namespace Friendsbook.Core.ValidationModels
                 Country = Country,
                 PhoneNumber = PhoneNumber,
                 Email = Email,
-                Birthdate = Birthdate,
             };
         }
     }
