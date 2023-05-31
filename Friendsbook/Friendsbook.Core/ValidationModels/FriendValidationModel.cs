@@ -45,6 +45,7 @@ namespace Friendsbook.Core.ValidationModels
                 OnPropertyChanged(nameof(IsImageValid));
             }
         }
+
         public IEnumerable<ValidationResult> ImageErrors => GetErrors(nameof(Image));
 
         public bool IsImageValid => !ImageErrors.Any();
