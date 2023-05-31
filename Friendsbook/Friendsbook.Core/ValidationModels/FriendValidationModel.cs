@@ -86,7 +86,7 @@ namespace Friendsbook.Core.ValidationModels
         public bool IsLastnameValid => !LastnameErrors.Any();
 
         [Required]
-        [MinLength(2)]
+        [MinLength(1)]
         [MaxLength(100)]
         public string HouseNumber
         {
