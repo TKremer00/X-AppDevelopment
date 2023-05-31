@@ -1,19 +1,47 @@
-﻿using Friendsbook.Core.MVVM;
-using Friendsbook.Persistence.Models;
+﻿using Friendsbook.Core.Controllers;
+using Friendsbook.Core.MVVM;
 
 namespace Friendsbook.Views
 {
-    internal class FriendsViewModel : ObservableObject
+    public class FriendsViewModel : ObservableObject
     {
-        public FriendsViewModel()
+        private readonly FriendsController _friendsController;
+        private IEnumerable<FriendListItemViewModel> _friends = Array.Empty<FriendListItemViewModel>();
+        private string _search;
+
+        public FriendsViewModel(FriendsController friendsController)
         {
-            // TODO: get this from database
-            Friends = new List<FriendListItemViewModel>()
-            {
-                new FriendListItemViewModel(new Friend { Id = 1, Firstname = "Wochi", Lastname = "Doe", })
-            };
+            _friendsController = friendsController;
+            _ = UpdateFriends();
         }
 
-        public IEnumerable<FriendListItemViewModel> Friends { get; private set; }
+        public async Task UpdateFriends()
+        {
+            var friends = await _friendsController.GetFriends();
+            _friends = friends.Select(x => new FriendListItemViewModel(x));
+        }
+
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                _search = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Friends));
+            }
+        }
+
+        public IEnumerable<FriendListItemViewModel> Friends => _friends.Where(FilterFriends);
+
+        private bool FilterFriends(FriendListItemViewModel friendListItemView)
+        {
+            if (string.IsNullOrEmpty(Search))
+            {
+                return true;
+            }
+
+            return friendListItemView.Friend.FullName.Contains(Search, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

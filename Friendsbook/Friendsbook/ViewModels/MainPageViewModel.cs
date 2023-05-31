@@ -1,23 +1,31 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using Friendsbook.Core.Controllers;
-using Friendsbook.Core.Helpers;
 using Friendsbook.Core.MVVM;
 using Friendsbook.Pages;
+using Friendsbook.UIHelpers;
+using Friendsbook.Views;
 
 namespace Friendsbook.ViewModels
 {
     public class MainPageViewModel : ObservableObject
     {
-        public MainPageViewModel(FriendsController friendsController)
+        public MainPageViewModel(FriendsViewModel friendsViewModel)
         {
+            FriendsViewModel = friendsViewModel;
             AddCommand = new RelayCommand(HandleAddCommand);
         }
 
         public RelayCommand AddCommand { get; }
 
-        private void HandleAddCommand()
+        public FriendsViewModel FriendsViewModel { get; }
+
+        public async Task UpdateFriends()
         {
-            NavigationHelper.Navigate<FriendFormPage>();
+            FriendsViewModel.UpdateFriends();
+        }
+
+        private async void HandleAddCommand()
+        {
+            await NavigationHelper.NavigateTo<FriendFormPage>();
         }
 
     }

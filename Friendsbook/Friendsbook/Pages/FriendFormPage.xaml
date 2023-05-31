@@ -29,7 +29,7 @@
 
             <Label Grid.Column="0" Text="Photo" VerticalOptions="Center"/>
 
-            <VerticalStackLayout Grid.Column="1" 
+            <Grid Grid.Column="1" 
                                  WidthRequest="60"
                                  HeightRequest="60"
                                  HorizontalOptions="Center">
@@ -42,11 +42,18 @@
                         BackgroundColor="Transparent"
                         IsVisible="{Binding HasProfilePicture, Converter={StaticResource InvertedBooleanConverter}}"
                         Command="{Binding TakePhotoCommand}" />
+                
+                <ActivityIndicator  
+                    IsVisible="{Binding IsLoading}"
+                    IsRunning="{Binding IsLoading}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                />
 
                 <Frame CornerRadius="360" IsVisible="{Binding HasProfilePicture}">
-                    <Image Aspect="AspectFit" Source="{Binding Friend.Image}"/>
+                    <Image Aspect="AspectFill" Source="{Binding Friend.Image}"/>
                 </Frame>
-            </VerticalStackLayout>
+            </Grid>
         </Grid>
 
         <Grid Margin="5,0">

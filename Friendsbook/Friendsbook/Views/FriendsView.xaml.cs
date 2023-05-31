@@ -5,6 +5,5 @@ public partial class FriendsView : ContentView
     public FriendsView()
     {
         InitializeComponent();
-        BindingContext = new FriendsViewModel();
     }
 }

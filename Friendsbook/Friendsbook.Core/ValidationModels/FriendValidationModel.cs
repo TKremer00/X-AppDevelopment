@@ -199,6 +199,7 @@ namespace Friendsbook.Core.ValidationModels
             return new Friend
             {
                 Id = Id,
+                Image = Image,
                 Firstname = Firstname,
                 Lastname = Lastname,
                 HouseNumber = HouseNumber,

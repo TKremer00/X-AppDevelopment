@@ -7,7 +7,7 @@
              x:DataType="viewModels:MainPageViewModel">
 
     <VerticalStackLayout>
-        <views:FriendsView />
+        <views:FriendsView BindingContext="{Binding FriendsViewModel}"/>
 
         <Button Text="Add" Command="{Binding AddCommand}" HorizontalOptions="End"/>
     </VerticalStackLayout>

@@ -1,6 +1,7 @@
 ﻿using Friendsbook.Core.Responses;
 using Friendsbook.Core.ValidationModels;
 using Friendsbook.Persistence;
+using Friendsbook.Persistence.Models;
 
 namespace Friendsbook.Core.Controllers
 {
@@ -27,6 +28,11 @@ namespace Friendsbook.Core.Controllers
             await _repositoryManager.SaveAsync();
 
             return new SuccessResponse();
+        }
+
+        public async Task<IEnumerable<Friend>> GetFriends()
+        {
+            return await _repositoryManager.Friends.GetAllAsync();
         }
 
         public async Task<string> TakePhoto()

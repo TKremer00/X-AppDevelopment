@@ -1,22 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Friendsbook.Core.Controllers;
-using Friendsbook.Core.Helpers;
 using Friendsbook.Core.MVVM;
 using Friendsbook.Core.ValidationModels;
 using Friendsbook.Pages;
 using Friendsbook.Persistence.Models;
+using Friendsbook.UIHelpers;
 
 namespace Friendsbook.ViewModels
 {
     public class FriendFormPageViewModel : ObservableObject
     {
         private readonly FriendsController _friendsController;
+        private readonly ImageController _imageController;
         private string[] _validationMessages = Array.Empty<string>();
+        private bool _isLoading;
 
-        public FriendFormPageViewModel(FriendsController friendsController)
+        public FriendFormPageViewModel(FriendsController friendsController, ImageController imageController)
         {
             Friend = new FriendValidationModel(new Friend());
             _friendsController = friendsController;
+            _imageController = imageController;
             SubmitButtonCommand = new RelayCommand(HandleSubmitButtonCommand);
             CancelButtonCommand = new RelayCommand(HandleCancelButtonCommand);
             TakePhotoCommand = new RelayCommand(HandleTakePhotoCommand);
@@ -41,6 +44,16 @@ namespace Friendsbook.ViewModels
 
         public bool HasProfilePicture => !string.IsNullOrEmpty(Friend.Image);
 
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public RelayCommand SubmitButtonCommand { get; }
 
         public RelayCommand CancelButtonCommand { get; }
@@ -56,22 +69,44 @@ namespace Friendsbook.ViewModels
 
             await _friendsController.SaveFriend(Friend);
 
-            NavigateToMainView();
+            await NavigateToMainView();
         }
 
-        private void HandleCancelButtonCommand()
+        private async void HandleCancelButtonCommand()
         {
-            NavigateToMainView();
+            await NavigateToMainView();
         }
 
-        private void NavigateToMainView()
+        private async Task NavigateToMainView()
         {
-            NavigationHelper.Navigate<MainPage>();
+            await NavigationHelper.NavigateTo<MainPage>();
         }
 
         private async void HandleTakePhotoCommand()
         {
+            try
+            {
+                var imageLocation = await _imageController.TakeImageAsync(HandleLoading);
+                if (string.IsNullOrEmpty(imageLocation))
+                {
+                    return;
+                }
 
+                Friend.Image = imageLocation;
+                RaisePropertyChanged(nameof(HasProfilePicture));
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+        private void HandleLoading(bool isLoading)
+        {
+            if (HasProfilePicture && isLoading)
+                return;
+
+            IsLoading = isLoading;
         }
     }
 }
