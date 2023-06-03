@@ -16,7 +16,7 @@ public partial class MainPage : ContentPage
 
     private async void ApplicationNavigated(object sender, ShellNavigatedEventArgs e)
     {
-        if (!e.Current.Location.AbsolutePath.EndsWith(nameof(MainPage)))
+        if (!e.Current.Location.OriginalString.EndsWith(nameof(MainPage)))
         {
             return;
         }
