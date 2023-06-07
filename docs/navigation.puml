@@ -1,0 +1,15 @@
+@startuml
+
+component "Dashboard" as main
+component "Show Plant" as showPlants
+component "Add Plant" as addPlants
+component "Settings" as settingsPage
+
+main -> showPlants
+showPlants -> main
+showPlants -> addPlants
+addPlants -> showPlants
+main -> settingsPage
+settingsPage -> main
+
+@enduml
