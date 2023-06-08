@@ -1,11 +1,13 @@
 ﻿using AlohaKit.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using FinalProject.Core.Enums;
+using FinalProject.Core.Helpers;
 using FinalProject.Persistence.Models;
 using System.Collections.ObjectModel;
 
 namespace FinalProject.Core.ViewModels
 {
-    public class MainPageViewModel : ObservableObject
+    public class MainPageViewModel : BaseViewModel
     {
         public MainPageViewModel()
         {
@@ -23,10 +25,20 @@ namespace FinalProject.Core.ViewModels
                 new Plant { PlantName = "Orchidee", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
                 new Plant { PlantName = "Orchidee2", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
             };
+
+            SettingsCommand = new AsyncRelayCommand(HandleSettingsCommandAsync);
         }
 
         public ObservableCollection<ChartItem> Temperatures { get; }
 
         public ObservableCollection<Plant> Plants { get; }
+
+        public AsyncRelayCommand SettingsCommand { get; }
+
+
+        private async Task HandleSettingsCommandAsync()
+        {
+            await RoutingHelper.NavigateToAsync(Routes.SettingsPage);
+        }
     }
 }

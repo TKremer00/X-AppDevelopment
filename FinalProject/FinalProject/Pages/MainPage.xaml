@@ -13,13 +13,6 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PrimaryColor}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
-    
-    <ContentPage.Resources>
-        <Style x:Key="HeaderLabelStyle" TargetType="mdc:Label" BasedOn="{StaticResource DefaultLabelStyle}">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="ForegroundColor" Value="{StaticResource SecondaryContainerColor}" />
-        </Style>
-    </ContentPage.Resources>
     <ScrollView Margin="5, 5">
         <VerticalStackLayout>
 
@@ -137,7 +130,12 @@
                         </HorizontalStackLayout>
                     </mdc:Card>
 
-                    <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                    <mdc:Card Style="{DynamicResource FilledCardStyle}" 
+                              BackgroundColour="{StaticResource OnBackgroundColor}" 
+                              Command="{Binding SettingsCommand}">
+                        <mdc:Card.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+                        </mdc:Card.GestureRecognizers>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=settingsblack.png, Dark=settingswhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
                             <mdc:Label Text="Settings" ForegroundColor="{StaticResource PrimaryContainerColor}" />
