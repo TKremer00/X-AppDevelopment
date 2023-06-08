@@ -1,4 +1,5 @@
 ﻿using FinalProject.Core.Helpers;
+using FinalProject.Core.ViewModels;
 using FinalProject.Pages;
 using Material.Components.Maui.Extensions;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ public static class MauiProgram
             .UseMaterialComponents(
                 new List<string>
                 {
+                    //"Aloha.ttf",
                     "Roboto-Regular.ttf",
                     "Roboto-Italic.ttf",
                     "Roboto-Medium.ttf",
@@ -35,6 +37,16 @@ public static class MauiProgram
 
     public static MauiAppBuilder RegisterDependencies(this MauiAppBuilder mauiAppBuilder)
     {
+        // Database
+
+        // Controllers
+
+        // Pages
+        mauiAppBuilder.Services.AddSingleton<MainPage>();
+
+        // View Models
+        mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
+
         return mauiAppBuilder;
     }
 

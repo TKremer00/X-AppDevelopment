@@ -10,6 +10,8 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <mds:MaterialStyles Dark="#bdffdf" Light="#51a459" />
+                <!--<mds:MaterialStyles Dark="#50e548" Light="#32c341" />-->
+                <ResourceDictionary Source="Resources/Styles/OverrideStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

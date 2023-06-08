@@ -2,41 +2,143 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinalProject.Pages.MainPage"
-             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+             xmlns:viewModels="clr-namespace:FinalProject.Core.ViewModels;assembly=FinalProject.Core"
+             xmlns:models="clr-namespace:FinalProject.Persistence.Models;assembly=FinalProject.Persistence"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             xmlns:aloha="clr-namespace:AlohaKit.Controls;assembly=AlohaKit"
+             x:Name="thisView"
+             x:DataType="viewModels:MainPageViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="HeaderLabelStyle" TargetType="mdc:Label" BasedOn="{StaticResource DefaultLabelStyle}">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="ForegroundColor" Value="{StaticResource SecondaryContainerColor}" />
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView Margin="5, 5">
+        <VerticalStackLayout>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                <VerticalStackLayout>
+                    <mdc:Label Text="Temperature" Style="{StaticResource HeaderLabelStyle}" />
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+                    <aloha:LineChart Margin="5,0,5,0"
+                                     AxisLinesColor="Transparent"
+                                     LineColor="White"
+                                     FontColor="White"
+                                     FillCurveColor="{StaticResource PrimaryColor}"
+                                     FooterLabelsFontColor="White"
+									 AxisLinesFontSize="11"
+									 AxisLinesStrokeSize="0.9"
+									 ChartMargin="10"
+									 ChartStyle="Curve"
+									 DisplayHeaderValues="True"
+									 DisplayHorizontalAxisLines="True"
+									 DisplayValueLabelsOnTop="False"
+									 DisplayVerticalAxisLines="False"
+									 EnableEntryAnimations="True"
+                                     Entries="{Binding Source={x:Reference thisView}, Path=BindingContext.Temperatures}"
+                                     ExpandAndFillBackgroundCurvePath="True"
+				 					 FontSize="15"
+				 					 FooterLabelsMargin="8"
+									 FooterLabelsTextSize="10"
+									 HeaderValuesMargin="20"
+									 HeightRequest="200"
+									 HorizontalOptions="FillAndExpand"
+									 IsCurveBackgroundFilled="True"
+									 IsLabelTextTruncationEnabled="True"
+									 ItemSeparationMargin="8"
+									 PathsColorOpacity="0.65"
+									 PointSize="3"
+									 ReanimateOnPropertyChanged="True"
+									 ShowPointsForCurveStyle="False"
+									 StrokeSize="2"
+									 VerticalOptions="Start"/>
+                </VerticalStackLayout>
+            </mdc:Card>
+            
+            <mdc:Card Margin="0, 20, 0, 0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                <VerticalStackLayout>
+                    <mdc:Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
+                    <ListView ItemsSource="{Binding Plants}" SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Plant">
+                                <ViewCell>
+                                    <Grid VerticalOptions="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="36" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                                        <Frame Grid.Column="0" CornerRadius="360" BackgroundColor="Transparent" BorderColor="Transparent">
+                                            <Grid>
+                                                <Image Source="{Binding ImageUrl}" Grid.Column="0" HeightRequest="32" WidthRequest="32"/>
+                                            </Grid>
+                                        </Frame>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                                        <Label Grid.Column="1" Margin="-36, 0, 0, 0" HorizontalTextAlignment="Center" VerticalOptions="Center" Text="{Binding PlantName}" />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <mdc:Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
+                </VerticalStackLayout>
+            </mdc:Card>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            <Grid ColumnSpacing="20" Margin="0, 20, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <mdc:Button Text="button" IconKind="Add" />
+                <mdc:Card Grid.Column="0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                    <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
+                        <mdc:Label Text="Humidity" Style="{StaticResource HeaderLabelStyle}"/>
+
+                        <mdc:Label Text="50%" Style="{StaticResource LargeLabel}"/>
+                    </VerticalStackLayout>
+                </mdc:Card>
+
+                <mdc:Card Grid.Column="1" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                    <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
+                        <mdc:Label Text="Pressure" Style="{StaticResource HeaderLabelStyle}"/>
+                        <mdc:Label Text="1000" Style="{StaticResource LargeLabel}"/>
+                        <mdc:Label Text="Pha" Style="{StaticResource HeaderLabelStyle}"/>
+                    </VerticalStackLayout>
+                </mdc:Card>
+            </Grid>
+
+            <Grid ColumnSpacing="20" Margin="0, 20, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <mdc:Card Grid.Column="0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                    <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
+                        <mdc:Label Text="Air quality" Style="{StaticResource HeaderLabelStyle}"/>
+
+                        <mdc:Label Text="1000" Style="{StaticResource LargeLabel}"/>
+                        <mdc:Label Text="PPM" Style="{StaticResource HeaderLabelStyle}"/>
+                    </VerticalStackLayout>
+                </mdc:Card>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="10">
+                    <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}" >
+                        <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
+                            <Image Source="{AppThemeBinding Light=bluetoothblack.png, Dark=bluetoothwhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
+                            <mdc:Label Text="Connected" ForegroundColor="{StaticResource PrimaryContainerColor}" />
+                        </HorizontalStackLayout>
+                    </mdc:Card>
+
+                    <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                        <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
+                            <Image Source="{AppThemeBinding Light=settingsblack.png, Dark=settingswhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
+                            <mdc:Label Text="Settings" ForegroundColor="{StaticResource PrimaryContainerColor}" />
+                        </HorizontalStackLayout>
+                    </mdc:Card>
+                </VerticalStackLayout>
+            </Grid>
 
         </VerticalStackLayout>
     </ScrollView>

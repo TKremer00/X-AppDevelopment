@@ -18,7 +18,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="AlohaKit" Version="1.0.74" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\FinalProject.Persistence\FinalProject.Persistence.csproj" />
 	</ItemGroup>
 
 </Project>
