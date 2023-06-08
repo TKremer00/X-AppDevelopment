@@ -7,7 +7,13 @@
              xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
              xmlns:aloha="clr-namespace:AlohaKit.Controls;assembly=AlohaKit"
              x:Name="thisView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModels:MainPageViewModel">
+
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PrimaryColor}" StatusBarStyle="Default" />
+    </ContentPage.Behaviors>
+    
     <ContentPage.Resources>
         <Style x:Key="HeaderLabelStyle" TargetType="mdc:Label" BasedOn="{StaticResource DefaultLabelStyle}">
             <Setter Property="FontSize" Value="12" />

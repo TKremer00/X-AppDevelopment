@@ -1,4 +1,5 @@
-﻿using FinalProject.Core.Helpers;
+﻿using CommunityToolkit.Maui;
+using FinalProject.Core.Helpers;
 using FinalProject.Core.ViewModels;
 using FinalProject.Pages;
 using Material.Components.Maui.Extensions;
@@ -15,6 +16,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .RegisterDependencies()
             .RegisterRoutes()
+            .UseMauiCommunityToolkit()
             .UseMaterialComponents(
                 new List<string>
                 {
