@@ -1,49 +1,43 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using FinalProject.Core.Enums;
+using FinalProject.Core.Helpers;
+using FinalProject.Core.ObservableModels;
 
 namespace FinalProject.Core.ViewModels
 {
     public class SettingsPageViewModel : BaseViewModel
     {
-
-        private int _chosenTemperatureUnitIndex;
-        private string[] _temperatureUnits;
-        private int _chosenUpdateEnviromentSpeedIndex;
-        private string[] _updateEnviromentSpeeds;
+        private readonly SettingModel _temperatureSetting;
+        private readonly SettingModel _updateEnviromentSpeedSetting;
 
         public SettingsPageViewModel()
         {
-            _temperatureUnits = Enum.GetNames<TemperatureUnits>();
-            _updateEnviromentSpeeds = Enum.GetNames<UpdateEnviromentSpeeds>().Select(x =>
-            {
-                var updateSetting = x.Split("_");
-                return $"{updateSetting[1]} {updateSetting[0].ToLowerInvariant()}";
-            }).ToArray();
-
-            UpdateSettingsCommand = new RelayCommand(HandleUpdateSettingsCommand);
+            _temperatureSetting = new(Settings.TemperatureUnit, Enum.GetNames<TemperatureUnits>());
+            _updateEnviromentSpeedSetting =
+                new(Settings.UpdateEnviromentSpeed, Enum.GetNames<UpdateEnviromentSpeeds>().Select(SanitizeUpdateEnviromentSpeedNames).ToArray());
+            UpdateSettingsCommand = new AsyncRelayCommand(HandleUpdateSettingsCommand);
         }
 
-        public int ChosenTemperatureUnitIndex
+        public SettingModel TemperatureSetting => _temperatureSetting;
+
+        public SettingModel UpdateEnviromentSpeedSetting => _updateEnviromentSpeedSetting;
+
+        public AsyncRelayCommand UpdateSettingsCommand { get; }
+
+        private string SanitizeUpdateEnviromentSpeedNames(string enviromentSpeed)
         {
-            get => _chosenTemperatureUnitIndex;
-            set => SetProperty(ref _chosenTemperatureUnitIndex, value);
+            var updateSetting = enviromentSpeed.Split("_");
+            return $"{updateSetting[1]} {updateSetting[0].ToLowerInvariant()}";
         }
 
-        public string[] TemperatureUnits => _temperatureUnits;
-
-        public int ChosenUpdateEnviromentSpeedIndex
+        private async Task HandleUpdateSettingsCommand()
         {
-            get => _chosenUpdateEnviromentSpeedIndex;
-            set => SetProperty(ref _chosenUpdateEnviromentSpeedIndex, value);
-        }
+            SettingsHelper.SetSetting(TemperatureSetting);
+            SettingsHelper.SetSetting(UpdateEnviromentSpeedSetting);
 
-        public string[] UpdateEnviromentSpeeds => _updateEnviromentSpeeds;
+            await ToasterHelper.Show("Updated Settings");
 
-        public RelayCommand UpdateSettingsCommand { get; }
-
-        private void HandleUpdateSettingsCommand()
-        {
-            throw new NotImplementedException();
+            await RoutingHelper.NavigateBackAsync();
         }
     }
 }

@@ -35,9 +35,14 @@ namespace FinalProject.Core.Helpers
         }
 #endif
 
-        public static async Task NavigateToAsync(Routes page)
+        internal static async Task NavigateToAsync(Routes page)
         {
             await Shell.Current.GoToAsync(_routes[page], true);
+        }
+
+        internal static async Task NavigateBackAsync()
+        {
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

@@ -17,6 +17,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .RegisterDependencies()
             .RegisterRoutes()
+            .RegisterDefaultPreferences()
             .UseMauiCommunityToolkit()
             .UseMaterialComponents(
                 new List<string>
@@ -65,6 +66,21 @@ public static class MauiProgram
         // NOTE: this is code to check if all routes defined in the `Routes` enum are defined.
         RoutingHelper.CheckAllRoutesRegisterd();
 #endif
+
+        return mauiAppBuilder;
+    }
+
+    public static MauiAppBuilder RegisterDefaultPreferences(this MauiAppBuilder mauiAppBuilder)
+    {
+        if (!Preferences.Default.ContainsKey(Settings.TemperatureUnit.ToString()))
+        {
+            Preferences.Default.Set(Settings.TemperatureUnit.ToString(), (int)TemperatureUnits.Celsius);
+        }
+
+        if (!Preferences.Default.ContainsKey(Settings.UpdateEnviromentSpeed.ToString()))
+        {
+            Preferences.Default.Set(Settings.UpdateEnviromentSpeed.ToString(), (int)UpdateEnviromentSpeeds.SECONDS_30);
+        }
 
         return mauiAppBuilder;
     }

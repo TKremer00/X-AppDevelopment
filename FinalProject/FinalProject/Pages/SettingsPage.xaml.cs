@@ -1,5 +1,5 @@
 using FinalProject.Core.ViewModels;
-using Material.Components.Maui.Core;
+using Material.Components.Maui;
 
 namespace FinalProject.Pages;
 
@@ -14,13 +14,25 @@ public partial class SettingsPage : ContentPage
         BindingContext = _viewModel;
     }
 
-    private void TemperatureUnitSelectedIndexChanged(object sender, SelectedIndexChangedEventArgs e)
+    private void TemperatureComboboxLoaded(object sender, EventArgs e)
     {
-        _viewModel.ChosenTemperatureUnitIndex = e.SelectedIndex;
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        var binding = new Binding(nameof(_viewModel.TemperatureSetting.ChosenIndex), mode: BindingMode.TwoWay, source: _viewModel.TemperatureSetting);
+        comboBox.SetBinding(ComboBox.SelectedIndexProperty, binding);
     }
 
-    private void EnvoirmentSpeedSelectedIndexChanged(object sender, SelectedIndexChangedEventArgs e)
+    private void EnvoirmentSpeedComboboxLoaded(object sender, EventArgs e)
     {
-        _viewModel.ChosenUpdateEnviromentSpeedIndex = e.SelectedIndex;
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        var binding = new Binding(nameof(_viewModel.UpdateEnviromentSpeedSetting.ChosenIndex), mode: BindingMode.TwoWay, source: _viewModel.UpdateEnviromentSpeedSetting);
+        comboBox.SetBinding(ComboBox.SelectedIndexProperty, binding);
     }
 }

@@ -13,15 +13,15 @@
 
                     <mdc:ComboBox Style="{DynamicResource FilledComboBoxStyle}" 
                                   LabelText="Temperature Unit"
-                                  SelectedIndexChanged="TemperatureUnitSelectedIndexChanged"
-                                  ItemsSource="{Binding TemperatureUnits}"
+                                  Loaded="TemperatureComboboxLoaded"
+                                  ItemsSource="{Binding TemperatureSetting.Values}"
                                   WidthRequest="250"
                                   />
 
                     <mdc:ComboBox Style="{DynamicResource FilledComboBoxStyle}" 
                                   LabelText="Update envoirment speed"
-                                  SelectedIndexChanged="EnvoirmentSpeedSelectedIndexChanged"
-                                  ItemsSource="{Binding UpdateEnviromentSpeeds}"
+                                  Loaded="EnvoirmentSpeedComboboxLoaded"
+                                  ItemsSource="{Binding UpdateEnviromentSpeedSetting.Values}"
                                   WidthRequest="250"
                                   />
 
