@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:observableModels="clr-namespace:FinalProject.Core.ObservableModels;assembly=FinalProject.Core"
+    xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui">
+
+    <DataTemplate x:DataType="observableModels:ObservablePlant" x:Key="ObservablePlantTemplate">
+        <ViewCell>
+            <Grid VerticalOptions="Center" BackgroundColor="{Binding BackgroundColor, FallbackValue=Transparent}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="https://www.optiflor.nl/static/site/header-circle-plus-flower.png"
+                                               Grid.Column="0"
+                                               HeightRequest="36" 
+                                               WidthRequest="36"/>
+
+                <Label Grid.Column="1" Margin="-36, 0, 0, 0" HorizontalTextAlignment="Center" VerticalOptions="Center" Text="{Binding Plant.PlantName}" />
+            </Grid>
+        </ViewCell>
+    </DataTemplate>
+</ResourceDictionary>

@@ -71,6 +71,7 @@ public static class MauiProgram
     {
         RoutingHelper.RegisterRoute<MainPage>(Routes.MainPage);
         RoutingHelper.RegisterRoute<SettingsPage>(Routes.SettingsPage);
+        RoutingHelper.RegisterRoute<PlantsPage>(Routes.PlantsPage);
 
 
 #if DEBUG

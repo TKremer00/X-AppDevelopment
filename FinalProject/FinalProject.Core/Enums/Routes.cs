@@ -4,5 +4,6 @@
     {
         MainPage,
         SettingsPage,
+        PlantsPage,
     }
 }

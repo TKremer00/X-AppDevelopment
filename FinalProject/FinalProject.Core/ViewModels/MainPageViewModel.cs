@@ -1,7 +1,9 @@
 ﻿using AlohaKit.Models;
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
+using FinalProject.Core.ObservableModels;
 using FinalProject.Persistence.Models;
 using System.Collections.ObjectModel;
 
@@ -20,25 +22,33 @@ namespace FinalProject.Core.ViewModels
                 new ChartItem { Value = 22, Label = "Value 5", }
             };
 
-            Plants = new()
+            Plants = new ObservableCollection<Plant>()
             {
                 new Plant { PlantName = "Orchidee", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
                 new Plant { PlantName = "Orchidee2", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
-            };
+            }.Select(x => new ObservablePlant(x)).ToObservableCollection();
 
-            SettingsCommand = new AsyncRelayCommand(HandleSettingsCommandAsync);
+            GoToPlantsCommand = new AsyncRelayCommand(HandleGoToPlantsCommand);
+            GoToSettingsCommand = new AsyncRelayCommand(HandleGoToSettingsCommandAsync);
         }
 
         public ObservableCollection<ChartItem> Temperatures { get; }
 
-        public ObservableCollection<Plant> Plants { get; }
+        public ObservableCollection<ObservablePlant> Plants { get; }
 
-        public AsyncRelayCommand SettingsCommand { get; }
+        public AsyncRelayCommand GoToPlantsCommand { get; }
+
+        public AsyncRelayCommand GoToSettingsCommand { get; }
 
 
-        private async Task HandleSettingsCommandAsync()
+        private async Task HandleGoToSettingsCommandAsync()
         {
             await RoutingHelper.NavigateToAsync(Routes.SettingsPage);
+        }
+
+        private async Task HandleGoToPlantsCommand()
+        {
+            await RoutingHelper.NavigateToAsync(Routes.PlantsPage);
         }
     }
 }

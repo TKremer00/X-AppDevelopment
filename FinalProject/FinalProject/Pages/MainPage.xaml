@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinalProject.Pages.MainPage"
              xmlns:viewModels="clr-namespace:FinalProject.Core.ViewModels;assembly=FinalProject.Core"
-             xmlns:models="clr-namespace:FinalProject.Persistence.Models;assembly=FinalProject.Persistence"
              xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
              xmlns:aloha="clr-namespace:AlohaKit.Controls;assembly=AlohaKit"
              x:Name="thisView"
@@ -55,30 +54,20 @@
                 </VerticalStackLayout>
             </mdc:Card>
             
-            <mdc:Card Margin="0, 20, 0, 0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+            <mdc:Card Margin="0, 20, 0, 0" 
+                      Style="{DynamicResource FilledCardStyle}" 
+                      BackgroundColour="{StaticResource OnBackgroundColor}"
+                      Command="{Binding GoToPlantsCommand}">
+                
+                <mdc:Card.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToPlantsCommand}" />
+                </mdc:Card.GestureRecognizers>
+                
                 <VerticalStackLayout>
                     <mdc:Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
-                    <ListView ItemsSource="{Binding Plants}" SelectionMode="None">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:Plant">
-                                <ViewCell>
-                                    <Grid VerticalOptions="Center">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="36" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Image Source="https://www.optiflor.nl/static/site/header-circle-plus-flower.png"
-                                               Grid.Column="0"
-                                               HeightRequest="36" 
-                                               WidthRequest="36"/>
-
-                                        <Label Grid.Column="1" Margin="-36, 0, 0, 0" HorizontalTextAlignment="Center" VerticalOptions="Center" Text="{Binding PlantName}" />
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    
+                    <ListView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
+                    
                     <mdc:Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
                 </VerticalStackLayout>
             </mdc:Card>
@@ -89,11 +78,15 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <mdc:Card Grid.Column="0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                <mdc:Card Grid.Column="0" 
+                          Style="{DynamicResource FilledCardStyle}" 
+                          BackgroundColour="{StaticResource OnBackgroundColor}">
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Humidity" Style="{StaticResource HeaderLabelStyle}"/>
 
                         <mdc:Label Text="50%" Style="{StaticResource LargeLabel}"/>
+
+                        <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}"/>
                     </VerticalStackLayout>
                 </mdc:Card>
 
@@ -131,9 +124,9 @@
 
                     <mdc:Card Style="{DynamicResource FilledCardStyle}" 
                               BackgroundColour="{StaticResource OnBackgroundColor}" 
-                              Command="{Binding SettingsCommand}">
+                              Command="{Binding GoToSettingsCommand}">
                         <mdc:Card.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+                            <TapGestureRecognizer Command="{Binding GoToSettingsCommand}"/>
                         </mdc:Card.GestureRecognizers>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=settingsblack.png, Dark=settingswhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
