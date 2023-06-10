@@ -12,7 +12,7 @@ namespace FinalProject.Core.Helpers
             _routes = new Dictionary<Routes, string>();
         }
 
-        public static void RegisterRoute<T>(Routes page)
+        public static void RegisterRoute<T>(Routes page) where T : Page
         {
             var type = typeof(T);
             var name = type.Name;
