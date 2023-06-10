@@ -3,7 +3,10 @@ using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ViewModels;
 using FinalProject.Pages;
+using FinalProject.Persistence.Database;
+using FinalProject.Persistence.Repositories;
 using Material.Components.Maui.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FinalProject;
@@ -36,12 +39,20 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        return builder.Build();
+        var app = builder.Build();
+
+        using var scope = app.Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PlantsContext>();
+        dbContext.Database.Migrate();
+
+        return app;
     }
 
     public static MauiAppBuilder RegisterDependencies(this MauiAppBuilder mauiAppBuilder)
     {
         // Database
+        mauiAppBuilder.Services.AddDbContext<PlantsContext>();
+        mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
         // Controllers
 

@@ -68,11 +68,10 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Frame Grid.Column="0" CornerRadius="360" BackgroundColor="Transparent" BorderColor="Transparent">
-                                            <Grid>
-                                                <Image Source="{Binding ImageUrl}" Grid.Column="0" HeightRequest="32" WidthRequest="32"/>
-                                            </Grid>
-                                        </Frame>
+                                        <Image Source="https://www.optiflor.nl/static/site/header-circle-plus-flower.png"
+                                               Grid.Column="0"
+                                               HeightRequest="36" 
+                                               WidthRequest="36"/>
 
                                         <Label Grid.Column="1" Margin="-36, 0, 0, 0" HorizontalTextAlignment="Center" VerticalOptions="Center" Text="{Binding PlantName}" />
                                     </Grid>
