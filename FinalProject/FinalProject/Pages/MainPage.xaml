@@ -12,10 +12,10 @@
     <ContentPage.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PrimaryColor}" StatusBarStyle="Default" />
     </ContentPage.Behaviors>
-    <ScrollView Margin="5, 5">
+    <ScrollView Margin="5">
         <VerticalStackLayout>
 
-            <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+            <mdc:Card>
                 <VerticalStackLayout>
                     <mdc:Label Text="Temperature" Style="{StaticResource HeaderLabelStyle}" />
 
@@ -55,8 +55,6 @@
             </mdc:Card>
             
             <mdc:Card Margin="0, 20, 0, 0" 
-                      Style="{DynamicResource FilledCardStyle}" 
-                      BackgroundColour="{StaticResource OnBackgroundColor}"
                       Command="{Binding GoToPlantsCommand}">
                 
                 <mdc:Card.GestureRecognizers>
@@ -78,9 +76,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <mdc:Card Grid.Column="0" 
-                          Style="{DynamicResource FilledCardStyle}" 
-                          BackgroundColour="{StaticResource OnBackgroundColor}">
+                <mdc:Card Grid.Column="0">
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Humidity" Style="{StaticResource HeaderLabelStyle}"/>
 
@@ -105,7 +101,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <mdc:Card Grid.Column="0" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
+                <mdc:Card Grid.Column="0">
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Air quality" Style="{StaticResource HeaderLabelStyle}"/>
 
@@ -115,16 +111,14 @@
                 </mdc:Card>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="10">
-                    <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}" >
+                    <mdc:Card>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=bluetoothblack.png, Dark=bluetoothwhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
                             <mdc:Label Text="Connected" ForegroundColor="{StaticResource PrimaryContainerColor}" />
                         </HorizontalStackLayout>
                     </mdc:Card>
 
-                    <mdc:Card Style="{DynamicResource FilledCardStyle}" 
-                              BackgroundColour="{StaticResource OnBackgroundColor}" 
-                              Command="{Binding GoToSettingsCommand}">
+                    <mdc:Card Command="{Binding GoToSettingsCommand}">
                         <mdc:Card.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoToSettingsCommand}"/>
                         </mdc:Card.GestureRecognizers>

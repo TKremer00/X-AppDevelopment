@@ -20,4 +20,8 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="ForegroundColor" Value="{StaticResource SecondaryContainerColor}" />
     </Style>
+
+    <Style TargetType="mdc:Card" BasedOn="{StaticResource FilledCardStyle}">
+        <Setter Property="BackgroundColour" Value="{StaticResource OnBackgroundColor}" />
+    </Style>
 </ResourceDictionary>

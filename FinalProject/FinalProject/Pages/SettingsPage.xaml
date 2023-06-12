@@ -5,9 +5,9 @@
              xmlns:viewModels="clr-namespace:FinalProject.Core.ViewModels;assembly=FinalProject.Core"
              xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
              x:DataType="viewModels:SettingsPageViewModel">
-    <ScrollView Margin="5, 5">
+    <ScrollView Margin="5">
         <VerticalStackLayout>
-            <mdc:Card Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}" Padding="10">
+            <mdc:Card Padding="10">
                 <VerticalStackLayout Padding="0, 20">
                     <mdc:Label Text="General" Style="{StaticResource HeaderLabelStyle}"/>
 

@@ -59,10 +59,12 @@ public static class MauiProgram
         // Pages
         mauiAppBuilder.Services.AddSingleton<MainPage>();
         mauiAppBuilder.Services.AddSingleton<SettingsPage>();
+        mauiAppBuilder.Services.AddSingleton<PlantsPage>();
 
         // View Models
         mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
         mauiAppBuilder.Services.AddTransient<SettingsPageViewModel>();
+        mauiAppBuilder.Services.AddTransient<PlantsPageViewModel>();
 
         return mauiAppBuilder;
     }
