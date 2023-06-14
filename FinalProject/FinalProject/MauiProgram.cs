@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using FinalProject.Communication.BLEConnection;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ViewModels;
@@ -22,6 +23,7 @@ public static class MauiProgram
             .RegisterRoutes()
             .RegisterDefaultPreferences()
             .UseMauiCommunityToolkit()
+            .UseShiny()
             .UseMaterialComponents(
                 new List<string>
                 {
@@ -39,6 +41,8 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+        builder.Services.AddBluetoothLE();
+
         var app = builder.Build();
 
         using var scope = app.Services.CreateScope();
@@ -55,6 +59,7 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
         // Controllers
+        mauiAppBuilder.Services.AddSingleton<NordicThingyConnection>();
 
         // Pages
         mauiAppBuilder.Services.AddSingleton<MainPage>();
