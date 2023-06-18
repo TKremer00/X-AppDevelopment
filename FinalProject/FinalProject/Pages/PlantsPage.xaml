@@ -20,7 +20,8 @@
 
                 <mdc:IconButton IconKind="Add" 
                                 Grid.Column="1"
-                                Style="{DynamicResource FilledIconButtonStyle}" />
+                                Style="{DynamicResource FilledIconButtonStyle}"
+                                Command="{Binding GoToAddPlant}"/>
             </Grid>
         </mdc:Card>
 

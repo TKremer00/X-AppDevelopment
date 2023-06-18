@@ -66,8 +66,8 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Shiny.BluetoothLE" Version="3.0.0-beta-0124" />
-		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-beta-0124" />
+		<PackageReference Include="Shiny.BluetoothLE" Version="3.0.0-beta-0153" />
+		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-beta-0153" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,6 +77,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\AddPlantPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\PlantsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -2,6 +2,7 @@
 using FinalProject.Communication.BLEConnection;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
+using FinalProject.Core.Services;
 using FinalProject.Core.ViewModels;
 using FinalProject.Pages;
 using FinalProject.Persistence.Database;
@@ -59,17 +60,22 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
         // Controllers
-        mauiAppBuilder.Services.AddSingleton<NordicThingyConnection>();
+        mauiAppBuilder.Services.AddBluetoothLE<NordicThingyConnection>();
+
+        // Services
+        mauiAppBuilder.Services.AddTransient<PlantService>();
 
         // Pages
         mauiAppBuilder.Services.AddSingleton<MainPage>();
         mauiAppBuilder.Services.AddSingleton<SettingsPage>();
         mauiAppBuilder.Services.AddSingleton<PlantsPage>();
+        mauiAppBuilder.Services.AddSingleton<AddPlantPage>();
 
         // View Models
         mauiAppBuilder.Services.AddTransient<MainPageViewModel>();
         mauiAppBuilder.Services.AddTransient<SettingsPageViewModel>();
         mauiAppBuilder.Services.AddTransient<PlantsPageViewModel>();
+        mauiAppBuilder.Services.AddTransient<AddPlantPageViewModel>();
 
         return mauiAppBuilder;
     }
@@ -79,7 +85,7 @@ public static class MauiProgram
         RoutingHelper.RegisterRoute<MainPage>(Routes.MainPage);
         RoutingHelper.RegisterRoute<SettingsPage>(Routes.SettingsPage);
         RoutingHelper.RegisterRoute<PlantsPage>(Routes.PlantsPage);
-
+        RoutingHelper.RegisterRoute<AddPlantPage>(Routes.AddPlantPage);
 
 #if DEBUG
         // NOTE: this is code to check if all routes defined in the `Routes` enum are defined.

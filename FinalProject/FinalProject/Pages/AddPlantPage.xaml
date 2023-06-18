@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinalProject.Pages.AddPlantPage"
+             xmlns:viewModels="clr-namespace:FinalProject.Core.ViewModels;assembly=FinalProject.Core"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             x:DataType="viewModels:AddPlantPageViewModel">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ErrorTemplate">
+            <Label Text="{Binding}" TextColor="White" Background="Red" />
+        </DataTemplate>
+    </ContentPage.Resources>
+    
+    <ScrollView Margin="5">
+        <VerticalStackLayout>
+            <mdc:TextField LabelText="Latin plant name"
+                           SupportingText=""
+                           CommandParameter="LatinPlantName"
+                           Loaded="LoadedTextField"/>
+
+            <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
+                            IsVisible="{Binding Plant.HasLatinPlantNameError}" 
+                            Margin="0, -15, 0, 0"
+                            ItemTemplate="{StaticResource ErrorTemplate}" />
+
+            <mdc:TextField LabelText="Plant name"
+                           SupportingText=""
+                           Style="{DynamicResource FilledTextFieldStyle}"
+                           CommandParameter="PlantName"
+                           Loaded="LoadedTextField"
+                           Margin="0, 20, 0, 0"/>
+
+            <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
+                            IsVisible="{Binding Plant.HasPlantNameError}" 
+                            Margin="0, -15, 0, 0"
+                            ItemTemplate="{StaticResource ErrorTemplate}" />
+
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20" Margin="0, 20, 0, 0">
+                <mdc:ComboBox LabelText="Temperature Range"
+                                ItemsSource="{Binding Plant.TemperatureRanges.Values}"
+                                CommandParameter="TemperatureRanges.ChosenIndex"
+                                Loaded="LoadedCombobox"/>
+                
+                <mdc:ComboBox LabelText="Humidity Range"
+                              ItemsSource="{Binding Plant.HumidityRanges.Values}"
+                              CommandParameter="HumidityRanges.ChosenIndex"
+                              Loaded="LoadedCombobox"/>
+            </HorizontalStackLayout>
+
+            <mdc:Button Text="Save"
+                        Margin="0, 20, 0, 0"
+                        Padding="5"
+                        Command="{Binding SavePlantCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

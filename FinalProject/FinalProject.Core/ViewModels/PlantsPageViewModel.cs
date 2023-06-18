@@ -1,4 +1,7 @@
-﻿using FinalProject.Core.ObservableModels;
+﻿using CommunityToolkit.Mvvm.Input;
+using FinalProject.Core.Enums;
+using FinalProject.Core.Helpers;
+using FinalProject.Core.ObservableModels;
 using FinalProject.Persistence.Models;
 
 namespace FinalProject.Core.ViewModels
@@ -14,6 +17,8 @@ namespace FinalProject.Core.ViewModels
                 new Plant { PlantName = "Orchidee", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
                 new Plant { PlantName = "Orchidee2", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
             };
+
+            GoToAddPlant = new AsyncRelayCommand(HandleGoToAddPlantAsync);
         }
 
         public string SearchPlantName
@@ -28,6 +33,8 @@ namespace FinalProject.Core.ViewModels
 
         public IEnumerable<ObservablePlant> Plants => _plants.Select(x => new ObservablePlant(x)).Where(FilterSearchPlant);
 
+        public AsyncRelayCommand GoToAddPlant { get; }
+
         private bool FilterSearchPlant(ObservablePlant observablePlant)
         {
             if (string.IsNullOrEmpty(SearchPlantName))
@@ -36,6 +43,11 @@ namespace FinalProject.Core.ViewModels
             }
 
             return observablePlant.Plant.PlantName.Contains(SearchPlantName, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private async Task HandleGoToAddPlantAsync()
+        {
+            await RoutingHelper.NavigateToAsync(Routes.AddPlantPage);
         }
     }
 }

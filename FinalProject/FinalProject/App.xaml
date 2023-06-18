@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FinalProject"
              xmlns:mds="clr-namespace:Material.Components.Maui.Styles;assembly=Material.Components.Maui"
+             xmlns:converters="clr-namespace:FinalProject.Core.Converters;assembly=FinalProject.Core"
              x:Class="FinalProject.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,8 @@
                 <ResourceDictionary Source="Resources/Styles/OverrideStyles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Templates.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:BooleanInverterConverter x:Key="booleanInverterConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

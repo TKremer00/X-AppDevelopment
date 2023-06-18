@@ -19,5 +19,10 @@ namespace FinalProject.Core.Helpers
         {
             return Preferences.Default.Get(setting.ToString(), 0);
         }
+
+        public static TemperatureUnits GetTemperatureUnitSetting()
+        {
+            return (TemperatureUnits)GetSetting(Settings.TemperatureUnit);
+        }
     }
 }

@@ -5,5 +5,6 @@
         MainPage,
         SettingsPage,
         PlantsPage,
+        AddPlantPage,
     }
 }
