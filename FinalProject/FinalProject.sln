@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Core", "FinalP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Persistence", "FinalProject.Persistence\FinalProject.Persistence.csproj", "{3C8BCCC0-2ECC-4AAF-9CE6-725AAF665B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalProject.Communication", "FinalProject.Communication\FinalProject.Communication.csproj", "{8AA54032-9712-4AA3-95B5-6451BB5785C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Communication", "FinalProject.Communication\FinalProject.Communication.csproj", "{8AA54032-9712-4AA3-95B5-6451BB5785C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0568D480-26BD-4424-984C-48AC38902BDC}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

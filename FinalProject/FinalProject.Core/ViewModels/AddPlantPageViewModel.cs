@@ -8,6 +8,7 @@ namespace FinalProject.Core.ViewModels
     public class AddPlantPageViewModel : BaseViewModel
     {
         private readonly PlantService _service;
+        private bool _isLoading;
 
         public AddPlantPageViewModel(PlantService plantService)
         {
@@ -18,20 +19,30 @@ namespace FinalProject.Core.ViewModels
 
         public PlantValidation Plant { get; }
 
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set => SetProperty(ref _isLoading, value);
+        }
+
         public AsyncRelayCommand SavePlantCommand { get; }
 
         private async Task HandleSavePlantCommandAsync()
         {
-            // TODO: check if needs spinner because of api request.
             if (Plant.HasErrors)
             {
                 return;
             }
 
+            IsLoading = true;
             var imageUrl = await RequestHelper.GetPlantImage(Plant.LatinPlantName);
             Plant.ImageUrl = imageUrl;
 
+#if !DEBUG
             await _service.SavePlant(Plant);
+#endif
+
+            IsLoading = false;
 
             await ToasterHelper.Show($"Save {Plant.PlantName} to database");
 

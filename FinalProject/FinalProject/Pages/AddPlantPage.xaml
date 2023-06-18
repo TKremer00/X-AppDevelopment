@@ -12,45 +12,59 @@
     </ContentPage.Resources>
     
     <ScrollView Margin="5">
-        <VerticalStackLayout>
-            <mdc:TextField LabelText="Latin plant name"
-                           SupportingText=""
-                           CommandParameter="LatinPlantName"
-                           Loaded="LoadedTextField"/>
+        <AbsoluteLayout>
+            <VerticalStackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                 AbsoluteLayout.LayoutFlags="All">
+                <mdc:TextField LabelText="Latin plant name"
+                               SupportingText=""
+                               CommandParameter="LatinPlantName"
+                               Loaded="LoadedTextField"/>
 
-            <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
-                            IsVisible="{Binding Plant.HasLatinPlantNameError}" 
-                            Margin="0, -15, 0, 0"
-                            ItemTemplate="{StaticResource ErrorTemplate}" />
+                <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
+                                IsVisible="{Binding Plant.HasLatinPlantNameError}" 
+                                Margin="0, -15, 0, 0"
+                                ItemTemplate="{StaticResource ErrorTemplate}" />
 
-            <mdc:TextField LabelText="Plant name"
-                           SupportingText=""
-                           Style="{DynamicResource FilledTextFieldStyle}"
-                           CommandParameter="PlantName"
-                           Loaded="LoadedTextField"
-                           Margin="0, 20, 0, 0"/>
+                <mdc:TextField LabelText="Plant name"
+                               SupportingText=""
+                               Style="{DynamicResource FilledTextFieldStyle}"
+                               CommandParameter="PlantName"
+                               Loaded="LoadedTextField"
+                               Margin="0, 20, 0, 0"/>
 
-            <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
-                            IsVisible="{Binding Plant.HasPlantNameError}" 
-                            Margin="0, -15, 0, 0"
-                            ItemTemplate="{StaticResource ErrorTemplate}" />
+                <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
+                                IsVisible="{Binding Plant.HasPlantNameError}" 
+                                Margin="0, -15, 0, 0"
+                                ItemTemplate="{StaticResource ErrorTemplate}" />
 
-            <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20" Margin="0, 20, 0, 0">
-                <mdc:ComboBox LabelText="Temperature Range"
-                                ItemsSource="{Binding Plant.TemperatureRanges.Values}"
-                                CommandParameter="TemperatureRanges.ChosenIndex"
-                                Loaded="LoadedCombobox"/>
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20" Margin="0, 20, 0, 0">
+                    <mdc:ComboBox LabelText="Temperature Range"
+                                    ItemsSource="{Binding Plant.TemperatureRanges.Values}"
+                                    CommandParameter="TemperatureRanges.ChosenIndex"
+                                    Loaded="LoadedCombobox"/>
                 
-                <mdc:ComboBox LabelText="Humidity Range"
-                              ItemsSource="{Binding Plant.HumidityRanges.Values}"
-                              CommandParameter="HumidityRanges.ChosenIndex"
-                              Loaded="LoadedCombobox"/>
-            </HorizontalStackLayout>
+                    <mdc:ComboBox LabelText="Humidity Range"
+                                  ItemsSource="{Binding Plant.HumidityRanges.Values}"
+                                  CommandParameter="HumidityRanges.ChosenIndex"
+                                  Loaded="LoadedCombobox"/>
+                </HorizontalStackLayout>
 
-            <mdc:Button Text="Save"
-                        Margin="0, 20, 0, 0"
-                        Padding="5"
-                        Command="{Binding SavePlantCommand}"/>
-        </VerticalStackLayout>
+                <mdc:Button Text="Save"
+                            Margin="0, 20, 0, 0"
+                            Padding="5"
+                            Command="{Binding SavePlantCommand}"/>
+            </VerticalStackLayout>
+
+            <mdc:Card IsVisible="{Binding IsLoading}"
+                      BackgroundColour="{StaticResource OnBackgroundColorTransparent}"
+                      AbsoluteLayout.LayoutBounds="0,0,1,1"
+                      AbsoluteLayout.LayoutFlags="All">
+                <ActivityIndicator
+                        IsRunning="{Binding IsLoading}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                    />
+            </mdc:Card>
+        </AbsoluteLayout>
     </ScrollView>
 </ContentPage>
