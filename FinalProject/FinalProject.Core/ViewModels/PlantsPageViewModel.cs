@@ -2,6 +2,7 @@
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
+using FinalProject.Core.Services;
 using FinalProject.Persistence.Models;
 
 namespace FinalProject.Core.ViewModels
@@ -9,16 +10,20 @@ namespace FinalProject.Core.ViewModels
     public class PlantsPageViewModel : BaseViewModel
     {
         private string _searchPlantName;
+        private readonly PlantService _service;
         private List<Plant> _plants;
 
-        public PlantsPageViewModel()
+        public PlantsPageViewModel(PlantService service)
         {
-            _plants = new() {
-                new Plant { PlantName = "Orchidee", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
-                new Plant { PlantName = "Orchidee2", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
-            };
-
+            _service = service;
+            _ = UpdatePlantsAsync();
             GoToAddPlant = new AsyncRelayCommand(HandleGoToAddPlantAsync);
+            RoutingHelper.RoutingHelperNavigationChanged += NavigationChanged;
+        }
+
+        private async Task UpdatePlantsAsync()
+        {
+            _plants = await _service.GetPlantsAsync();
         }
 
         public string SearchPlantName
@@ -34,6 +39,16 @@ namespace FinalProject.Core.ViewModels
         public IEnumerable<ObservablePlant> Plants => _plants.Select(x => new ObservablePlant(x)).Where(FilterSearchPlant);
 
         public AsyncRelayCommand GoToAddPlant { get; }
+
+        private async void NavigationChanged(object sender, RoutEventArgs e)
+        {
+            if (e.From != Routes.AddPlantPage && e.To != Routes.PlantsPage)
+            {
+                return;
+            }
+
+            await UpdatePlantsAsync();
+        }
 
         private bool FilterSearchPlant(ObservablePlant observablePlant)
         {

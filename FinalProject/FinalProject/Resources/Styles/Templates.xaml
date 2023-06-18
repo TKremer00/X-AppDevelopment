@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Source="https://www.optiflor.nl/static/site/header-circle-plus-flower.png"
+            <Image Source="{Binding Plant.ImageUrl, FallbackValue=https://cdn-icons-png.flaticon.com/512/45/45777.png}"
                        Grid.Column="0"
                        HeightRequest="36" 
                        WidthRequest="36"/>

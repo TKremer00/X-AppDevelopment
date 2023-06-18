@@ -1,4 +1,5 @@
 ﻿using FinalProject.Core.ValidationModels;
+using FinalProject.Persistence.Models;
 using FinalProject.Persistence.Repositories;
 
 namespace FinalProject.Core.Services
@@ -22,5 +23,7 @@ namespace FinalProject.Core.Services
             await _repository.AddAsync(plant.ConvertToModel());
             await _repository.SaveAsync();
         }
+
+        public Task<List<Plant>> GetPlantsAsync() => _repository.GetAllAsync();
     }
 }

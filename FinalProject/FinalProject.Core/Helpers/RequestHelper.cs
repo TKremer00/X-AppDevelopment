@@ -19,6 +19,7 @@ namespace FinalProject.Core.Helpers
         {
             const string DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/45/45777.png";
 #if DEBUG
+            await Task.Delay(500);
             return DEFAULT_IMAGE;
 #endif
             var urlEscapedName = HttpUtility.UrlEncode(latinPlantname);
