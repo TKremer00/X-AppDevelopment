@@ -56,7 +56,7 @@ public static class MauiProgram
     public static MauiAppBuilder RegisterDependencies(this MauiAppBuilder mauiAppBuilder)
     {
         // Database
-        mauiAppBuilder.Services.AddDbContext<PlantsContext>();
+        mauiAppBuilder.Services.AddDbContext<PlantsContext>(x => PlantsContext.GetDbContextOptions(x));
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
         // Controllers

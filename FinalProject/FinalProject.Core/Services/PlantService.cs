@@ -6,6 +6,7 @@ namespace FinalProject.Core.Services
 {
     public class PlantService
     {
+        private const int MOST_RECENT_ITEMS_COUNT = 2;
         private readonly PlantRepository _repository;
 
         public PlantService(PlantRepository repository)
@@ -25,5 +26,7 @@ namespace FinalProject.Core.Services
         }
 
         public Task<List<Plant>> GetPlantsAsync() => _repository.GetAllAsync();
+
+        public Task<List<Plant>> GetMostRecentAsync() => _repository.GetMostRecentAsync(MOST_RECENT_ITEMS_COUNT);
     }
 }

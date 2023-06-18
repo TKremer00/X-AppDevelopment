@@ -17,5 +17,7 @@
         public int MaxHumidity { get; set; }
 
         public string ImageUrl { get; set; } = null!;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

@@ -9,17 +9,19 @@
     <DataTemplate x:DataType="observableModels:ObservablePlant" x:Key="ObservablePlantTemplate">
         <Grid VerticalOptions="Center" BackgroundColor="{Binding BackgroundColor, FallbackValue={StaticResource TransparentColor}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="41" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image Source="{Binding Plant.ImageUrl, FallbackValue=https://cdn-icons-png.flaticon.com/512/45/45777.png}"
+            <Border Margin="5,0,0,0" StrokeThickness="0" StrokeShape="RoundRectangle 30">
+                <Image Source="{Binding Plant.ImageUrl, FallbackValue=https://cdn-icons-png.flaticon.com/512/45/45777.png}"
                        Grid.Column="0"
-                       HeightRequest="36" 
+                       HeightRequest="36"
                        WidthRequest="36"/>
+            </Border>
 
             <Label Grid.Column="1" 
-                       Margin="-36, 0, 0, 0" 
+                       Margin="-41, 0, 0, 0" 
                        HorizontalTextAlignment="Center" 
                        VerticalOptions="Center" 
                        Text="{Binding Plant.PlantName}" />

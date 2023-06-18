@@ -16,6 +16,7 @@ namespace FinalProject.Core.ViewModels
         public PlantsPageViewModel(PlantService service)
         {
             _service = service;
+            _plants = new List<Plant>();
             _ = UpdatePlantsAsync();
             GoToAddPlant = new AsyncRelayCommand(HandleGoToAddPlantAsync);
             RoutingHelper.RoutingHelperNavigationChanged += NavigationChanged;
@@ -23,7 +24,15 @@ namespace FinalProject.Core.ViewModels
 
         private async Task UpdatePlantsAsync()
         {
-            _plants = await _service.GetPlantsAsync();
+            var plants = await _service.GetPlantsAsync();
+
+            if (_plants?.LastOrDefault()?.Id == plants.LastOrDefault()?.Id)
+            {
+                return;
+            }
+
+            _plants = plants;
+            OnPropertyChanged(nameof(Plants));
         }
 
         public string SearchPlantName
@@ -42,7 +51,7 @@ namespace FinalProject.Core.ViewModels
 
         private async void NavigationChanged(object sender, RoutEventArgs e)
         {
-            if (e.From != Routes.AddPlantPage && e.To != Routes.PlantsPage)
+            if (e.To != Routes.PlantsPage)
             {
                 return;
             }

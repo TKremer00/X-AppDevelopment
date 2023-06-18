@@ -6,12 +6,14 @@ namespace FinalProject.Core.Helpers
     {
         private static readonly IDictionary<Routes, string> _routes;
         public static event EventHandler<RoutEventArgs> RoutingHelperNavigationChanged;
-        private static Routes _previouseRoute = Routes.MainPage;
+        private static readonly Stack<Routes> _previouseRoutes;
 
 
         static RoutingHelper()
         {
             _routes = new Dictionary<Routes, string>();
+            _previouseRoutes = new Stack<Routes>();
+            _previouseRoutes.Push(Routes.MainPage);
         }
 
         public static void RegisterRoute<T>(Routes page) where T : Page
@@ -39,17 +41,28 @@ namespace FinalProject.Core.Helpers
 
         internal static async Task NavigateToAsync(Routes page)
         {
-            RoutingHelperNavigationChanged?.Invoke(null, new RoutEventArgs { From = _previouseRoute, To = page });
-            _previouseRoute = page;
+            var eventsArgs = new RoutEventArgs { From = _previouseRoutes.Peek(), To = page };
+            RoutingHelperNavigationChanged?.Invoke(null, eventsArgs);
+            _previouseRoutes.Push(page);
 
             await Shell.Current.GoToAsync(_routes[page], true);
         }
 
         internal static async Task NavigateBackAsync()
         {
-            RoutingHelperNavigationChanged.Invoke(null, new RoutEventArgs { From = _previouseRoute });
-
+            NavigateBackUpdate();
             await Shell.Current.GoToAsync("..");
+        }
+
+        public static void NavigateBackUpdate()
+        {
+            var eventsArgs = new RoutEventArgs { From = _previouseRoutes.Pop(), To = _previouseRoutes.Peek() };
+            RoutingHelperNavigationChanged.Invoke(null, eventsArgs);
+
+            if (!_previouseRoutes.Any())
+            {
+                _previouseRoutes.Push(Routes.MainPage);
+            }
         }
     }
 

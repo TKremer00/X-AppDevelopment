@@ -1,18 +1,21 @@
 ﻿using AlohaKit.Models;
-using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.Input;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
-using FinalProject.Persistence.Models;
+using FinalProject.Core.Services;
 using System.Collections.ObjectModel;
 
 namespace FinalProject.Core.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        public MainPageViewModel()
+        private readonly PlantService _plantService;
+        public MainPageViewModel(PlantService plantService)
         {
+            _plantService = plantService;
+
+            // TODO: get temperatures from database/thingy.
             Temperatures = new()
             {
                 new ChartItem { Value = 23, Label = "Value 1", },
@@ -22,24 +25,45 @@ namespace FinalProject.Core.ViewModels
                 new ChartItem { Value = 22, Label = "Value 5", }
             };
 
-            Plants = new ObservableCollection<Plant>()
-            {
-                new Plant { PlantName = "Orchidee", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
-                new Plant { PlantName = "Orchidee2", ImageUrl = "https://www.optiflor.nl/static/site/header-circle-plus-flower.png" },
-            }.Select(x => new ObservablePlant(x)).ToObservableCollection();
+            _ = UpdatePlants();
+
+            RoutingHelper.RoutingHelperNavigationChanged += RoutingHelperNavigationChanged;
 
             GoToPlantsCommand = new AsyncRelayCommand(HandleGoToPlantsCommand);
             GoToSettingsCommand = new AsyncRelayCommand(HandleGoToSettingsCommandAsync);
         }
 
+        public async Task UpdatePlants()
+        {
+            var mostRecentPlants = await _plantService.GetMostRecentAsync();
+            var plants = mostRecentPlants.Select(x => new ObservablePlant(x)).ToList();
+
+            if (Plants?.FirstOrDefault()?.Plant.Id == plants.FirstOrDefault()?.Plant.Id)
+            {
+                return;
+            }
+
+            Plants = plants;
+            OnPropertyChanged(nameof(Plants));
+        }
+
+        private async void RoutingHelperNavigationChanged(object sender, RoutEventArgs e)
+        {
+            if (e.To != Routes.MainPage)
+            {
+                return;
+            }
+
+            await UpdatePlants();
+        }
+
         public ObservableCollection<ChartItem> Temperatures { get; }
 
-        public ObservableCollection<ObservablePlant> Plants { get; }
+        public IEnumerable<ObservablePlant> Plants { get; private set; }
 
         public AsyncRelayCommand GoToPlantsCommand { get; }
 
         public AsyncRelayCommand GoToSettingsCommand { get; }
-
 
         private async Task HandleGoToSettingsCommandAsync()
         {
