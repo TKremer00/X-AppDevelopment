@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using FinalProject.Communication.BLEConnection;
+using FinalProject.Communication.Communication;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.Services;
@@ -59,8 +59,8 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddDbContext<PlantsContext>(x => PlantsContext.GetDbContextOptions(x));
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
-        // Controllers
-        mauiAppBuilder.Services.AddBluetoothLE<NordicThingyConnection>();
+        // Connections
+        mauiAppBuilder.Services.AddSingleton<IBluetoothNotifier>();
 
         // Services
         mauiAppBuilder.Services.AddTransient<PlantService>();
