@@ -1,4 +1,6 @@
-﻿namespace FinalProject;
+﻿using FinalProject.Communication.Communication;
+
+namespace FinalProject;
 
 public partial class App : Application
 {
@@ -30,11 +32,10 @@ public partial class App : Application
 
     public override void CloseWindow(Window window)
     {
+        // TODO: doesn't work
         base.CloseWindow(window);
 
-        /*        var bluetoothLowEnergyConnection = Handler.MauiContext.Services.GetService<BluetoothLowEnergyService>();
-
-                if (bluetoothLowEnergyConnection.HasBluetoothConnection())
-                    bluetoothLowEnergyConnection.BluetoothDisconnection();*/
+        var bluetoothNotifier = Handler.MauiContext.Services.GetService<BluetoothNotifier>();
+        bluetoothNotifier.Dispose();
     }
 }

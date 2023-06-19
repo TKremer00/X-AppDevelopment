@@ -4,6 +4,7 @@
     {
         BluetoothNotEnabled,
         NoAvailableDevices,
+        Connect,
         Connecting,
         Connected,
     }

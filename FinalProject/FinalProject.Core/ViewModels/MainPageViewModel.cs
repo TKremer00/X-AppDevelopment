@@ -1,5 +1,7 @@
 ﻿using AlohaKit.Models;
 using CommunityToolkit.Mvvm.Input;
+using FinalProject.Communication.Communication;
+using FinalProject.Communication.Data.Enums;
 using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
@@ -11,9 +13,12 @@ namespace FinalProject.Core.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         private readonly PlantService _plantService;
-        public MainPageViewModel(PlantService plantService)
+        private readonly BluetoothNotifier _bluetoothNotifier;
+
+        public MainPageViewModel(PlantService plantService, BluetoothNotifier bluetoothNotifier)
         {
             _plantService = plantService;
+            _bluetoothNotifier = bluetoothNotifier;
 
             // TODO: get temperatures from database/thingy.
             Temperatures = new()
@@ -27,11 +32,26 @@ namespace FinalProject.Core.ViewModels
 
             _ = UpdatePlants();
 
+            _bluetoothNotifier.StateChanged += BluetoothNotifierStateChanged;
             RoutingHelper.RoutingHelperNavigationChanged += RoutingHelperNavigationChanged;
 
+            BluetoothConnectionText = BluetoothStates.Connect;
             GoToPlantsCommand = new AsyncRelayCommand(HandleGoToPlantsCommand);
+            BluetoothCommand = new AsyncRelayCommand(HandleBluetoothCommand);
             GoToSettingsCommand = new AsyncRelayCommand(HandleGoToSettingsCommandAsync);
         }
+
+        public BluetoothStates BluetoothConnectionText { get; private set; }
+
+        public ObservableCollection<ChartItem> Temperatures { get; }
+
+        public IEnumerable<ObservablePlant> Plants { get; private set; }
+
+        public AsyncRelayCommand GoToPlantsCommand { get; }
+
+        public AsyncRelayCommand BluetoothCommand { get; }
+
+        public AsyncRelayCommand GoToSettingsCommand { get; }
 
         public async Task UpdatePlants()
         {
@@ -56,18 +76,20 @@ namespace FinalProject.Core.ViewModels
 
             await UpdatePlants();
         }
-
-        public ObservableCollection<ChartItem> Temperatures { get; }
-
-        public IEnumerable<ObservablePlant> Plants { get; private set; }
-
-        public AsyncRelayCommand GoToPlantsCommand { get; }
-
-        public AsyncRelayCommand GoToSettingsCommand { get; }
+        private void BluetoothNotifierStateChanged(object sender, BluetoothStates e)
+        {
+            BluetoothConnectionText = e;
+            OnPropertyChanged(nameof(BluetoothConnectionText));
+        }
 
         private async Task HandleGoToSettingsCommandAsync()
         {
             await RoutingHelper.NavigateToAsync(Routes.SettingsPage);
+        }
+
+        private async Task HandleBluetoothCommand()
+        {
+            await _bluetoothNotifier.Connect();
         }
 
         private async Task HandleGoToPlantsCommand()

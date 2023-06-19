@@ -6,13 +6,13 @@ namespace FinalProject.Communication.Communication
 {
     partial class BluetoothNotifier
     {
-        private readonly Thread _thread;
-        private readonly Random _random;
-        private readonly Characteristics[] _characteristics;
+        private Thread _thread;
+        private Random _random;
+        private Characteristics[] _characteristics;
         private bool _isDisposing;
         private bool _isRunning;
 
-        public BluetoothNotifier()
+        partial void Ctor()
         {
             _characteristics = Enum.GetValues<Characteristics>();
             _thread = new Thread(SimulateDataUpdate);
@@ -39,7 +39,8 @@ namespace FinalProject.Communication.Communication
 
         public partial void Disconnect()
         {
-            _isRunning = false;
+            _isDisposing = true;
+            Disconnect();
         }
 
         private void SimulateDataUpdate()
@@ -50,7 +51,7 @@ namespace FinalProject.Communication.Communication
                 {
                     foreach (var characteristic in _characteristics)
                     {
-                        SensorDataChanged.Invoke(this, new SensorData(characteristic, GenerateData(characteristic)));
+                        SensorDataChanged?.Invoke(this, new SensorData(characteristic, GenerateData(characteristic)));
                     }
                     Thread.Sleep(250);
                 }

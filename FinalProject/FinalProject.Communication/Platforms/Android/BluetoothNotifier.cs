@@ -12,6 +12,10 @@ namespace FinalProject.Communication.Communication
 
         public partial bool HasConnection() => _peripheral?.IsConnected() ?? false;
 
+        partial void Ctor()
+        {
+        }
+
         public partial async Task Connect()
         {
             const string NORDIC_THINGY_UUID = "00000000-0000-0000-0000-ca5d92b32ecd";
@@ -96,7 +100,10 @@ namespace FinalProject.Communication.Communication
 
         public partial void Dispose()
         {
-
+            if (HasConnection())
+            {
+                Disconnect();
+            }
         }
     }
 }

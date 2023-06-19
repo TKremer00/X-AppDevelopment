@@ -111,10 +111,13 @@
                 </mdc:Card>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="10">
-                    <mdc:Card>
+                    <mdc:Card Command="{Binding BluetoothCommand}">
+                        <mdc:Card.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BluetoothCommand}"/>
+                        </mdc:Card.GestureRecognizers>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=bluetoothblack.png, Dark=bluetoothwhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
-                            <mdc:Label Text="Connected" ForegroundColor="{StaticResource PrimaryContainerColor}" />
+                            <mdc:Label Text="{Binding BluetoothConnectionText}" ForegroundColor="{StaticResource PrimaryContainerColor}" />
                         </HorizontalStackLayout>
                     </mdc:Card>
 
