@@ -8,9 +8,9 @@ namespace FinalProject.Communication.Communication
     {
         private readonly Thread _thread;
         private readonly Random _random;
+        private readonly Characteristics[] _characteristics;
         private bool _isDisposing;
         private bool _isRunning;
-        private Characteristics[] _characteristics;
 
         public BluetoothNotifier()
         {
@@ -18,6 +18,8 @@ namespace FinalProject.Communication.Communication
             _thread = new Thread(SimulateDataUpdate);
             _random = new Random();
         }
+
+        public partial bool HasConnection() => _isRunning;
 
         public partial async Task Connect()
         {

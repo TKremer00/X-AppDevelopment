@@ -8,6 +8,10 @@ namespace FinalProject.Communication.Communication
 {
     partial class BluetoothNotifier
     {
+        private IPeripheral _peripheral;
+
+        public partial bool HasConnection() => _peripheral?.IsConnected() ?? false;
+
         public partial async Task Connect()
         {
             const string NORDIC_THINGY_UUID = "00000000-0000-0000-0000-ca5d92b32ecd";

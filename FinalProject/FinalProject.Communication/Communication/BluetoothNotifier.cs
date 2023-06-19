@@ -10,14 +10,13 @@ namespace FinalProject.Communication.Communication
         public event EventHandler<BluetoothStates> StateChanged;
 
         private readonly IBleManager _bleManager;
-        private IPeripheral _peripheral;
 
         public BluetoothNotifier(IBleManager bleManager)
         {
             _bleManager = bleManager;
         }
 
-        public virtual bool HasConnection => _peripheral?.IsConnected() ?? false;
+        public partial bool HasConnection();
 
         public partial Task Connect();
 

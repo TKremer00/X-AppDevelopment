@@ -2,6 +2,8 @@
 {
     partial class BluetoothNotifier
     {
+        public partial bool HasConnection() => throw new NotImplementedException();
+
         public partial async Task Connect()
         {
             throw new NotImplementedException()

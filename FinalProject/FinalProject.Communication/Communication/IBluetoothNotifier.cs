@@ -8,7 +8,7 @@ namespace FinalProject.Communication.Communication
         event EventHandler<BluetoothStates> StateChanged;
         event EventHandler<SensorData> SensorDataChanged;
 
-        public bool HasConnection { get; }
+        public bool HasConnection();
 
         public Task Connect();
 
