@@ -4,24 +4,24 @@
     {
         partial void Ctor()
         {
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
 
         public partial bool HasConnection() => throw new NotImplementedException();
 
         public partial async Task Connect()
         {
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
 
         public partial void Disconnect()
         {
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
 
         public partial void Dispose()
         {
-            throw new NotImplementedException()
+            throw new NotImplementedException();
         }
     }
 }
