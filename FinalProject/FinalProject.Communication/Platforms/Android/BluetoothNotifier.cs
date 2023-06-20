@@ -1,7 +1,6 @@
 ﻿using FinalProject.Communication.Data.Enums;
 using FinalProject.Communication.Data.Models;
 using Shiny.BluetoothLE;
-using Shiny.BluetoothLE.Managed;
 using CharacteristicExtensions = FinalProject.Communication.Data.Enums.CharacteristicExtensions;
 
 namespace FinalProject.Communication.Communication
@@ -26,20 +25,19 @@ namespace FinalProject.Communication.Communication
                 return;
             }
 
-            IManagedScan scanner;
+            var scanner = _bleManager.CreateManagedScanner();
+
             try
             {
-                scanner = _bleManager.CreateManagedScanner();
+                await scanner.Start(predicate: scanResult => scanResult.Peripheral.Uuid == NORDIC_THINGY_UUID);
             }
-            catch (Exception)
+            catch (Java.Lang.NullPointerException)
             {
                 StateChanged?.Invoke(this, BluetoothStates.BluetoothNotEnabled);
                 return;
             }
 
             StateChanged.Invoke(this, BluetoothStates.Connecting);
-
-            await scanner.Start(predicate: scanResult => scanResult.Peripheral.Uuid == NORDIC_THINGY_UUID);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
             var resultedPeripheral = scanner.Peripherals.FirstOrDefault();

@@ -60,7 +60,7 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
 
         // Connections
-        mauiAppBuilder.Services.AddSingleton<BluetoothNotifier>();
+        mauiAppBuilder.Services.AddSingleton<IBluetoothNotifier, BluetoothNotifier>();
 
         // Services
         mauiAppBuilder.Services.AddTransient<PlantService>();

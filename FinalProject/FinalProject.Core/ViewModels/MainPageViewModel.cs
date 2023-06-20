@@ -13,9 +13,9 @@ namespace FinalProject.Core.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         private readonly PlantService _plantService;
-        private readonly BluetoothNotifier _bluetoothNotifier;
+        private readonly IBluetoothNotifier _bluetoothNotifier;
 
-        public MainPageViewModel(PlantService plantService, BluetoothNotifier bluetoothNotifier)
+        public MainPageViewModel(PlantService plantService, IBluetoothNotifier bluetoothNotifier)
         {
             _plantService = plantService;
             _bluetoothNotifier = bluetoothNotifier;

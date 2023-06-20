@@ -23,24 +23,21 @@ namespace FinalProject.Communication.Communication
 
         public partial async Task Connect()
         {
-            if (_thread.IsAlive)
+            if (!_thread.IsAlive)
             {
-                return;
+                _thread.Start();
             }
 
             StateChanged.Invoke(this, BluetoothStates.Connecting);
-
             // Simulate a connection
             await Task.Delay(250);
-            _thread.Start();
             StateChanged.Invoke(this, BluetoothStates.Connected);
             _isRunning = true;
         }
 
         public partial void Disconnect()
         {
-            _isDisposing = true;
-            Disconnect();
+            _isRunning = false;
         }
 
         private void SimulateDataUpdate()
@@ -60,11 +57,6 @@ namespace FinalProject.Communication.Communication
             }
         }
 
-        public partial void Dispose()
-        {
-            _isDisposing = true;
-        }
-
         private byte[] GenerateData(Characteristics characteristic)
         {
             return characteristic switch
@@ -76,6 +68,12 @@ namespace FinalProject.Communication.Communication
                 Characteristics.BatteryVoltage => new byte[] { 200, 0, 0, 0 },
                 _ => throw new NotImplementedException(),
             };
+        }
+
+        public partial void Dispose()
+        {
+            _isDisposing = true;
+            Disconnect();
         }
     }
 }

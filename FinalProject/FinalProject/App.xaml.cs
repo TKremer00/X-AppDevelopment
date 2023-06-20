@@ -1,6 +1,4 @@
-﻿using FinalProject.Communication.Communication;
-
-namespace FinalProject;
+﻿namespace FinalProject;
 
 public partial class App : Application
 {
@@ -28,14 +26,5 @@ public partial class App : Application
         }
 
         throw new Exception("could not find resource");
-    }
-
-    public override void CloseWindow(Window window)
-    {
-        // TODO: doesn't work
-        base.CloseWindow(window);
-
-        var bluetoothNotifier = Handler.MauiContext.Services.GetService<BluetoothNotifier>();
-        bluetoothNotifier.Dispose();
     }
 }
