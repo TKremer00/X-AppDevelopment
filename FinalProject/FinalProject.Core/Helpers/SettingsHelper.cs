@@ -24,5 +24,10 @@ namespace FinalProject.Core.Helpers
         {
             return (TemperatureUnits)GetSetting(Settings.TemperatureUnit);
         }
+
+        public static int GetUpdateEnviromentSpeedsSetting()
+        {
+            return ((UpdateEnviromentSpeeds)GetSetting(Settings.UpdateEnviromentSpeed)).GetSecconds();
+        }
     }
 }

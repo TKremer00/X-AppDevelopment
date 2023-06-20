@@ -15,5 +15,9 @@ namespace FinalProject.Communication.Data.Models
         public byte[] RawData { get; set; }
 
         public int Value => RawData.FirstOrDefault();
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime LocalTime => CreatedAt.ToLocalTime();
     }
 }
