@@ -58,6 +58,7 @@ public static class MauiProgram
         // Database
         mauiAppBuilder.Services.AddDbContext<PlantsContext>(x => PlantsContext.GetDbContextOptions(x));
         mauiAppBuilder.Services.AddScoped<PlantRepository>();
+        mauiAppBuilder.Services.AddScoped<TemperatureRepository>();
 
         // Connections
         mauiAppBuilder.Services.AddSingleton<IBluetoothNotifier, BluetoothNotifier>();

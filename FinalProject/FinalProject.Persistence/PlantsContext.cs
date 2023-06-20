@@ -7,6 +7,8 @@ namespace FinalProject.Persistence.Database
     {
         public virtual DbSet<Plant> Plants { get; set; }
 
+        public virtual DbSet<Temperature> Temperatures { get; set; }
+
         public static DbContextOptions GetDbContextOptions(DbContextOptionsBuilder optionsBuilder)
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;

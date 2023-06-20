@@ -19,7 +19,7 @@
                                   />
 
                     <mdc:ComboBox Style="{DynamicResource FilledComboBoxStyle}" 
-                                  LabelText="Update envoirment speed"
+                                  LabelText="Save environment in database frequency"
                                   Loaded="EnvoirmentSpeedComboboxLoaded"
                                   ItemsSource="{Binding UpdateEnviromentSpeedSetting.Values}"
                                   WidthRequest="250"

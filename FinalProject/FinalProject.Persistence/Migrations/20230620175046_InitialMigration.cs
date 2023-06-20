@@ -30,6 +30,20 @@ namespace FinalProject.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Plants", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Temperatures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Value = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Temperatures", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -37,6 +51,9 @@ namespace FinalProject.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Plants");
+
+            migrationBuilder.DropTable(
+                name: "Temperatures");
         }
     }
 }

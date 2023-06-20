@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Persistence.Migrations
 {
     [DbContext(typeof(PlantsContext))]
-    [Migration("20230618114819_InitialMigration")]
+    [Migration("20230620175046_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -56,6 +56,24 @@ namespace FinalProject.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Plants");
+                });
+
+            modelBuilder.Entity("FinalProject.Persistence.Models.Temperature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Value")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Temperatures");
                 });
 #pragma warning restore 612, 618
         }

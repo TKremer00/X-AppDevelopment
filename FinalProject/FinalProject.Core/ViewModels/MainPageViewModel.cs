@@ -20,7 +20,7 @@ namespace FinalProject.Core.ViewModels
             _plantService = plantService;
             _bluetoothNotifier = bluetoothNotifier;
 
-            // TODO: get temperatures from database/thingy.
+            // TODO: get temperatures from database event on add.
             Temperatures = new()
             {
                 new ChartItem { Value = 23, Label = "Value 1", },

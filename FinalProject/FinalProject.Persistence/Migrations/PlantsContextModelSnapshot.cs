@@ -54,6 +54,24 @@ namespace FinalProject.Persistence.Migrations
 
                     b.ToTable("Plants");
                 });
+
+            modelBuilder.Entity("FinalProject.Persistence.Models.Temperature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("Value")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Temperatures");
+                });
 #pragma warning restore 612, 618
         }
     }
