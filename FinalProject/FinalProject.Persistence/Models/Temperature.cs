@@ -9,5 +9,7 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime LocalTime => CreatedAt.ToLocalTime();
+
+        public int IntValue => Value.First();
     }
 }

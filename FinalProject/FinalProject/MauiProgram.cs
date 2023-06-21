@@ -67,6 +67,7 @@ public static class MauiProgram
 
         // Services
         mauiAppBuilder.Services.AddTransient<PlantService>();
+        mauiAppBuilder.Services.AddTransient<TemperatureService>();
 
         // Pages
         mauiAppBuilder.Services.AddSingleton<MainPage>();

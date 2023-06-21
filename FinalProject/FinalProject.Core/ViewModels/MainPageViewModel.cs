@@ -9,6 +9,7 @@ using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Core.Services;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 
 namespace FinalProject.Core.ViewModels
 {
@@ -17,31 +18,22 @@ namespace FinalProject.Core.ViewModels
         private const int MAX_TEMPERATURES = 10;
 
         private readonly PlantService _plantService;
+        private readonly TemperatureService _temperatureService;
         private readonly IBluetoothNotifier _bluetoothNotifier;
         private int? _humidity;
         private int? _pressure;
         private int? _indoorAirQuality;
-        private ObservableList<ChartItem> _temperatures;
+        private ObservableCollection<ChartItem> _temperatures;
         private IReadOnlyDictionary<Characteristics, UpdateHelper> _updateHelpers;
 
-        public MainPageViewModel(PlantService plantService, IBluetoothNotifier bluetoothNotifier)
+        public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, IBluetoothNotifier bluetoothNotifier)
         {
             _plantService = plantService;
+            _temperatureService = temperatureService;
             _bluetoothNotifier = bluetoothNotifier;
 
             // TODO: get historical data to seed the temperatures.
-            _temperatures = new() {
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(12), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(13), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(12), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(12), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" },
-                new ChartItem() { Value = TemperatureConverter.temperatureConverter.Convert(10), Label = $"{DateTime.Now:HH:mm:ss}" }
-            };
+            _temperatures = new();
 
             var updateHelpers = new Dictionary<Characteristics, UpdateHelper>();
             foreach (var characteristic in Enum.GetValues<Characteristics>())
@@ -52,6 +44,7 @@ namespace FinalProject.Core.ViewModels
             _updateHelpers = updateHelpers;
 
             _ = UpdatePlants();
+            _ = UpdateTemperature();
 
             _bluetoothNotifier.StateChanged += BluetoothNotifierStateChanged;
             _bluetoothNotifier.SensorDataChanged += SensorDataChanged;
@@ -105,6 +98,19 @@ namespace FinalProject.Core.ViewModels
 
             Plants = plants;
             OnPropertyChanged(nameof(Plants));
+        }
+
+        public async Task UpdateTemperature()
+        {
+            var temperatures = await _temperatureService.GetLastTemperaturesAsync(10);
+            var charts = temperatures
+                .Select(x => new ChartItem { Value = TemperatureConverter.temperatureConverter.Convert(x.IntValue), Label = $"{x.LocalTime:HH:mm:ss}" })
+                .ToList();
+
+            foreach (var chartItem in charts)
+            {
+                _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
+            }
         }
 
         private async void RoutingHelperNavigationChanged(object sender, RoutEventArgs e)
