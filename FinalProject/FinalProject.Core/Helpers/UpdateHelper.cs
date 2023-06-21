@@ -1,6 +1,6 @@
 ﻿namespace FinalProject.Core.Helpers
 {
-    internal class UpdateHelper
+    public class UpdateHelper
     {
         private long _lastUpdate;
         private long _updateSpeed;

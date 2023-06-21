@@ -50,5 +50,7 @@ namespace FinalProject.Persistence.Repositories
         {
             return _context.Set<T>().FindAsync(id);
         }
+
+        public Task<int> SaveAsync() => _context.SaveChangesAsync();
     }
 }

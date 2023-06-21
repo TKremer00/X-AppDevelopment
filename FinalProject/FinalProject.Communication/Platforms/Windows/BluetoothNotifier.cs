@@ -48,6 +48,12 @@ namespace FinalProject.Communication.Communication
                 {
                     foreach (var characteristic in _characteristics)
                     {
+                        if (characteristic == Characteristics.Pressure)
+                        {
+                            SensorDataChanged?.Invoke(this, new SensorData(characteristic, GenerateData(characteristic), (raw) => raw.FirstOrDefault() * 10));
+                            continue;
+                        }
+
                         SensorDataChanged?.Invoke(this, new SensorData(characteristic, GenerateData(characteristic)));
                     }
                     Thread.Sleep(250);
@@ -62,7 +68,7 @@ namespace FinalProject.Communication.Communication
             return characteristic switch
             {
                 Characteristics.Temperature => new byte[] { (byte)(_random.Next(32) + 15), 0, 0, 0 },
-                Characteristics.Pressure => new byte[] { (byte)(_random.Next(32) + 15), 0, 0, 0 }, // TODO: correct this value.
+                Characteristics.Pressure => new byte[] { (byte)(_random.Next(150) + 90), 0, 0, 0 },
                 Characteristics.Humidity => new byte[] { (byte)(_random.Next(65) + 35), 0, 0, 0 },
                 Characteristics.IndoorAirQuality => new byte[] { (byte)(_random.Next(115) + 15), 0, 0, 0 },
                 Characteristics.BatteryVoltage => new byte[] { 200, 0, 0, 0 },

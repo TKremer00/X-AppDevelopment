@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,6 +10,7 @@ namespace FinalProject.Persistence.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DROP TABLE IF EXISTS Plants;");
             migrationBuilder.CreateTable(
                 name: "Plants",
                 columns: table => new
@@ -31,6 +31,7 @@ namespace FinalProject.Persistence.Migrations
                     table.PrimaryKey("PK_Plants", x => x.Id);
                 });
 
+            migrationBuilder.Sql("DROP TABLE IF EXISTS Temperatures;");
             migrationBuilder.CreateTable(
                 name: "Temperatures",
                 columns: table => new

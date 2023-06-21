@@ -35,7 +35,7 @@ namespace FinalProject.Core.ViewModels
             }
 
             IsLoading = true;
-            var imageUrl = await RequestHelper.GetPlantImage(Plant.LatinPlantName);
+            var imageUrl = await RequestHelper.GetPlantImageAsync(Plant.LatinPlantName);
             Plant.ImageUrl = imageUrl;
 
             await _service.SavePlant(Plant);

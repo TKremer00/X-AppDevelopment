@@ -1,23 +1,20 @@
 ﻿using FinalProject.Persistence.Models;
 using FinalProject.Persistence.Repositories;
+using FinaltProject.Persistence.Test.Helpers;
 using NUnit.Framework;
 
 namespace FinaltProject.Persistence.Test.Repositories
 {
-    public class PlantRepositoryTest
+    public class PlantRepositoryTest : BaseRepositoryTester<Plant, PlantRepository>
     {
-        private readonly PlantRepository _repository;
-
-        public PlantRepositoryTest()
+        public PlantRepositoryTest() : base(new PlantFaker(), new PlantRepository(ContextHelper.GenerateContext()))
         {
-            var context = ContextHelper.GenerateContext();
-            _repository = new PlantRepository(context);
         }
 
         [Test]
         public async Task TestGetMostRecentAsync_Always_Return_Most_Recent_Async()
         {
-            var plant = CreateFakePlant();
+            var plant = _faker.generate();
             await _repository.AddAsync(plant);
             await _repository.SaveAsync();
 
@@ -31,25 +28,5 @@ namespace FinaltProject.Persistence.Test.Repositories
             });
         }
 
-        private static Plant CreateFakePlant(int id = 0, DateTime? createdAt = null)
-        {
-            if (!createdAt.HasValue)
-            {
-                createdAt = DateTime.Now;
-            }
-
-            return new Plant
-            {
-                Id = id,
-                LatinPlantName = Guid.NewGuid().ToString(),
-                PlantName = Guid.NewGuid().ToString(),
-                MinTemperature = 0,
-                MaxTemperature = 0,
-                MinHumidity = 0,
-                MaxHumidity = 0,
-                ImageUrl = Guid.NewGuid().ToString(),
-                CreatedAt = createdAt.Value,
-            };
-        }
     }
 }

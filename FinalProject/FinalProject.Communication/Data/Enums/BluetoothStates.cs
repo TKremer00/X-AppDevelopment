@@ -3,6 +3,7 @@
     public enum BluetoothStates
     {
         BluetoothNotEnabled,
+        PairingFailed,
         NoAvailableDevices,
         Connect,
         Connecting,

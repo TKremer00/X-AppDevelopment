@@ -6,6 +6,7 @@ using FinalProject.Core.Services;
 using FinalProject.Core.ViewModels;
 using FinalProject.Pages;
 using FinalProject.Persistence.Database;
+using FinalProject.Persistence.Extension;
 using FinalProject.Persistence.Repositories;
 using Material.Components.Maui.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,7 @@ public static class MauiProgram
         using var scope = app.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<PlantsContext>();
         dbContext.Database.Migrate();
+        _ = dbContext.Database.SeedIfEmpty(scope.ServiceProvider);
 
         return app;
     }

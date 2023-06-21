@@ -106,7 +106,7 @@
                         <mdc:Label Text="Air quality" Style="{StaticResource HeaderLabelStyle}"/>
 
                         <mdc:Label Text="{Binding IndoorAirQuality, TargetNullValue='No value'}" Style="{StaticResource LargeLabel}"/>
-                        <mdc:Label Text="PPM" Style="{StaticResource HeaderLabelStyle}"/>
+                        <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}"/>
                     </VerticalStackLayout>
                 </mdc:Card>
 

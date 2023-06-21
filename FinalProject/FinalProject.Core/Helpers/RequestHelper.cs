@@ -15,13 +15,13 @@ namespace FinalProject.Core.Helpers
             return new RestClient(options);
         }
 
-        public static async Task<string> GetPlantImage(string latinPlantname)
+        public static async Task<string> GetPlantImageAsync(string latinPlantname)
         {
             const string DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/45/45777.png";
-#if DEBUG
-            await Task.Delay(500);
-            return DEFAULT_IMAGE;
-#endif
+
+            /*            await Task.Delay(500);
+                        return DEFAULT_IMAGE;
+            */
             var urlEscapedName = HttpUtility.UrlEncode(latinPlantname);
             var request = new RestRequest($"/species-list?q={urlEscapedName}&key={API_KEY}");
             try

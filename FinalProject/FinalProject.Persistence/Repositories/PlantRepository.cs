@@ -11,7 +11,5 @@ namespace FinalProject.Persistence.Repositories
         }
 
         public Task<List<Plant>> GetMostRecentAsync(int count) => _context.Plants.OrderBy(x => x.CreatedAt).Take(count).ToListAsync();
-
-        public Task<int> SaveAsync() => _context.SaveChangesAsync();
     }
 }
