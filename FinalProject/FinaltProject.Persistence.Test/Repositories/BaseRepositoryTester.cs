@@ -15,6 +15,19 @@ namespace FinaltProject.Persistence.Test.Repositories
             _faker = faker;
         }
 
+        protected async Task<TEntity[]> AddItemsToDatabaseAsync(int amount)
+        {
+            var items = _faker.generate(10);
+
+            foreach (var item in items)
+            {
+                await _repository.AddAsync(item);
+            }
+
+            await _repository.SaveAsync();
+            return items;
+        }
+
         [SetUp]
         public abstract void SetUp();
 

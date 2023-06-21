@@ -18,5 +18,23 @@ namespace FinalProject.Persistence.Test.Repositories
         {
             _repository = new TemperatureRepository(ContextHelper.GenerateContext());
         }
+
+        [Test]
+        public async Task TestGetMostRecentAsync_Always_Return_Most_Recent_Async()
+        {
+            var count = 3;
+            var temperatures = await AddItemsToDatabaseAsync(count * 2);
+
+            var oldestItems = await _repository.GetLastAsync(count);
+            var lastItems = temperatures.OrderByDescending(x => x.CreatedAt).Take(count).ToArray();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(oldestItems, Is.Not.Null);
+                Assert.That(oldestItems.Any(), Is.True);
+                Assert.That(oldestItems, Has.Count.EqualTo(count));
+                Assert.That(oldestItems, Is.EquivalentTo(lastItems));
+            });
+        }
     }
 }

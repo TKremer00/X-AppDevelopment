@@ -1,10 +1,11 @@
 ﻿using FinalProject.Data.Models;
+using FinalProject.Persistence.Test.Helpers;
 
 namespace FinaltProject.Persistence.Test.Helpers
 {
-    internal class PlantFaker : IFaker<Plant>
+    internal class PlantFaker : FakerBase<Plant>
     {
-        public Plant generate()
+        public override Plant generate()
         {
             return new Plant()
             {
