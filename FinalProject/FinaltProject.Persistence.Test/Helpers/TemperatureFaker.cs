@@ -6,7 +6,10 @@ namespace FinaltProject.Persistence.Test.Helpers
     {
         public Temperature generate()
         {
-            throw new NotImplementedException();
+            return new Temperature()
+            {
+                Value = new byte[] { (byte)(Faker.RandomNumber.Next(20) + 10), 0, 0, 0 }
+            };
         }
     }
 }

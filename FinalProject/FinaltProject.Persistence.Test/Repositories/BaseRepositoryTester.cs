@@ -4,17 +4,19 @@ using NUnit.Framework;
 
 namespace FinaltProject.Persistence.Test.Repositories
 {
-    public class BaseRepositoryTester<TEntity, TRepository> where TEntity : class where TRepository : BaseRepository<TEntity>
+    [TestFixture]
+    public abstract class BaseRepositoryTester<TEntity, TRepository> where TEntity : class where TRepository : BaseRepository<TEntity>
     {
-        protected readonly TRepository _repository;
+        protected TRepository _repository = null!;
         protected readonly IFaker<TEntity> _faker;
 
-        // TODO: this doesn't work.
-        public BaseRepositoryTester(IFaker<TEntity> faker, TRepository repository)
+        public BaseRepositoryTester(IFaker<TEntity> faker)
         {
-            _repository = repository;
             _faker = faker;
         }
+
+        [SetUp]
+        public abstract void SetUp();
 
         [Test]
         public async Task TestAddEntity()

@@ -7,8 +7,14 @@ namespace FinaltProject.Persistence.Test.Repositories
 {
     public class PlantRepositoryTest : BaseRepositoryTester<Plant, PlantRepository>
     {
-        public PlantRepositoryTest() : base(new PlantFaker(), new PlantRepository(ContextHelper.GenerateContext()))
+        public PlantRepositoryTest() : base(new PlantFaker())
         {
+        }
+
+        [SetUp]
+        public override void SetUp()
+        {
+            _repository = new PlantRepository(ContextHelper.GenerateContext());
         }
 
         [Test]
