@@ -20,4 +20,8 @@
 	  <PackageReference Include="Shiny.BluetoothLE" Version="3.0.0-beta-0154" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\FinalProject.Data\FinalProject.Data.csproj" />
+	</ItemGroup>
+
 </Project>

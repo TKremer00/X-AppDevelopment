@@ -1,12 +1,7 @@
-﻿namespace FinalProject.Core.Enums
-{
-    public enum TemperatureUnits
-    {
-        Celsius,
-        Fahrenheit,
-        Kelvin
-    }
+﻿using FinalProject.Data.Enums;
 
+namespace FinalProject.Core.Extensions
+{
     public static class TemperatureUnitsExtensions
     {
         public static string GetSymbol(this TemperatureUnits temperatureUnits)

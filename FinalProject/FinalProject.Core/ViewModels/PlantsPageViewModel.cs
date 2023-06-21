@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Core.Services;
-using FinalProject.Persistence.Models;
+using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
 
 namespace FinalProject.Core.ViewModels
 {

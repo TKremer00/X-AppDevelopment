@@ -1,4 +1,4 @@
-﻿namespace FinalProject.Communication.Data.Enums
+﻿namespace FinalProject.Data.Enums
 {
     public enum Characteristics
     {
@@ -9,7 +9,7 @@
         BatteryVoltage
     }
 
-    internal static class CharacteristicExtensions
+    public static class CharacteristicExtensions
     {
         public const string TEMP_UUID = "506a55c4-b5e7-46fa-8326-8acaeb1189eb";
         public const string PRESSURE_UUID = "51838aff-2d9a-b32a-b32a-8187e41664ba";

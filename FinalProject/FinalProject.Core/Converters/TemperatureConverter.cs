@@ -1,5 +1,5 @@
-﻿using FinalProject.Core.Enums;
-using FinalProject.Core.Helpers;
+﻿using FinalProject.Core.Extensions;
+using FinalProject.Data.Enums;
 using System.Globalization;
 
 namespace FinalProject.Core.Converters
@@ -11,7 +11,7 @@ namespace FinalProject.Core.Converters
         public override int Convert(int value, Type targetType, object parameter, CultureInfo culture)
         {
             var doubleValue = (double)value;
-            return SettingsHelper.GetTemperatureUnitSetting() switch
+            return Preferences.Default.GetTemperatureUnit() switch
             {
                 TemperatureUnits.Celsius => value,
                 TemperatureUnits.Fahrenheit => (int)Math.Round(doubleValue * 1.8 + 32),
@@ -23,7 +23,7 @@ namespace FinalProject.Core.Converters
         public override int ConvertBack(int value, Type targetType, object parameter, CultureInfo culture)
         {
             var doubleValue = (double)value;
-            return SettingsHelper.GetTemperatureUnitSetting() switch
+            return Preferences.Default.GetTemperatureUnit() switch
             {
                 TemperatureUnits.Celsius => value,
                 TemperatureUnits.Fahrenheit => (int)Math.Round((doubleValue - 32) * .5556),

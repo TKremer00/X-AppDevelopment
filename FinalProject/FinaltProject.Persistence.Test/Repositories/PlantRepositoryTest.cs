@@ -1,4 +1,4 @@
-﻿using FinalProject.Persistence.Models;
+﻿using FinalProject.Data.Models;
 using FinalProject.Persistence.Repositories;
 using FinaltProject.Persistence.Test.Helpers;
 using NUnit.Framework;

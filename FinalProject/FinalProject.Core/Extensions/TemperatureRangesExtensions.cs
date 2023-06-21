@@ -1,14 +1,8 @@
 ﻿using FinalProject.Core.Converters;
+using FinalProject.Data.Enums;
 
-namespace FinalProject.Core.Enums
+namespace FinalProject.Core.Extensions
 {
-    public enum TemperatureRanges
-    {
-        _0_till_10,
-        _10_till_20,
-        _20_till_30,
-    }
-
     public static class TemperatureRangesExtensions
     {
         public static (int Min, int Max) GetTemperatures(this TemperatureRanges temperatureRanges)

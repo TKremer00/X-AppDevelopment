@@ -1,5 +1,5 @@
-﻿using FinalProject.Communication.Data.Enums;
-using FinalProject.Communication.Data.Models;
+﻿using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
 
 namespace FinalProject.Communication.Communication
 {

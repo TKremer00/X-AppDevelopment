@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using FinalProject.Communication.Communication;
-using FinalProject.Core.Enums;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.Services;
 using FinalProject.Core.ViewModels;
+using FinalProject.Data.Enums;
 using FinalProject.Pages;
 using FinalProject.Persistence.Database;
 using FinalProject.Persistence.Extension;

@@ -1,5 +1,5 @@
 ﻿using FinalProject.Core.ValidationModels;
-using FinalProject.Persistence.Models;
+using FinalProject.Data.Models;
 using FinalProject.Persistence.Repositories;
 
 namespace FinalProject.Core.Services

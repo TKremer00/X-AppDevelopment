@@ -1,4 +1,4 @@
-﻿namespace FinalProject.Communication.Data.Enums
+﻿namespace FinalProject.Data.Enums
 {
     public enum BluetoothStates
     {

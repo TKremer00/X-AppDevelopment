@@ -1,4 +1,4 @@
-﻿using FinalProject.Persistence.Models;
+﻿using FinalProject.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject.Persistence.Database

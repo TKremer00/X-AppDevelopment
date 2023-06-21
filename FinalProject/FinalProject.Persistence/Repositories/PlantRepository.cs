@@ -1,5 +1,5 @@
-﻿using FinalProject.Persistence.Database;
-using FinalProject.Persistence.Models;
+﻿using FinalProject.Data.Models;
+using FinalProject.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject.Persistence.Repositories

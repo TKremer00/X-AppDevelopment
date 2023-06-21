@@ -1,4 +1,4 @@
-﻿using FinalProject.Persistence.Models;
+﻿using FinalProject.Data.Models;
 
 namespace FinaltProject.Persistence.Test.Helpers
 {

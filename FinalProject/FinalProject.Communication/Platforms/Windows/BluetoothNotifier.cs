@@ -1,6 +1,6 @@
-﻿using FinalProject.Communication.Data.Enums;
-using FinalProject.Communication.Data.Models;
-using Characteristics = FinalProject.Communication.Data.Enums.Characteristics;
+﻿using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
+using Characteristics = FinalProject.Data.Enums.Characteristics;
 
 namespace FinalProject.Communication.Communication
 {

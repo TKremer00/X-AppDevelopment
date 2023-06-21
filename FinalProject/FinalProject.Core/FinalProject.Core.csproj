@@ -25,6 +25,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\FinalProject.Communication\FinalProject.Communication.csproj" />
+	  <ProjectReference Include="..\FinalProject.Data\FinalProject.Data.csproj" />
 	  <ProjectReference Include="..\FinalProject.Persistence\FinalProject.Persistence.csproj" />
 	</ItemGroup>
 

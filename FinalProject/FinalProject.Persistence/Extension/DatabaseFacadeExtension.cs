@@ -1,4 +1,4 @@
-﻿using FinalProject.Persistence.Models;
+﻿using FinalProject.Data.Models;
 using FinalProject.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;

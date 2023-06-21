@@ -15,7 +15,5 @@ namespace FinalProject.Core.Helpers
 
             await toast.Show();
         }
-
-
     }
 }

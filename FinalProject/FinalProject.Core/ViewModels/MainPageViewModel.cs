@@ -1,13 +1,13 @@
 ﻿using AlohaKit.Models;
 using CommunityToolkit.Mvvm.Input;
 using FinalProject.Communication.Communication;
-using FinalProject.Communication.Data.Enums;
 using FinalProject.Core.Converters;
-using FinalProject.Core.Enums;
 using FinalProject.Core.Extensions;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Core.Services;
+using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
@@ -128,7 +128,7 @@ namespace FinalProject.Core.ViewModels
             OnPropertyChanged(nameof(BluetoothConnectionText));
         }
 
-        private async void SensorDataChanged(object sender, Communication.Data.Models.SensorData e)
+        private async void SensorDataChanged(object sender, SensorData e)
         {
             if (!_updateHelpers[e.Characteristic].CanUpdate())
             {
@@ -160,7 +160,6 @@ namespace FinalProject.Core.ViewModels
                 }
             });
         }
-
 
         private async Task HandleGoToSettingsCommandAsync()
         {

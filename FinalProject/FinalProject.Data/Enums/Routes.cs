@@ -1,4 +1,4 @@
-﻿namespace FinalProject.Core.Enums
+﻿namespace FinalProject.Data.Enums
 {
     public enum Routes
     {

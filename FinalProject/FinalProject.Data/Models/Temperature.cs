@@ -1,4 +1,4 @@
-﻿namespace FinalProject.Persistence.Models
+﻿namespace FinalProject.Data.Models
 {
     public class Temperature
     {

@@ -1,4 +1,6 @@
-﻿namespace FinalProject.Core.Helpers
+﻿using FinalProject.Core.Extensions;
+
+namespace FinalProject.Core.Helpers
 {
     public class UpdateHelper
     {
@@ -7,7 +9,7 @@
 
         public UpdateHelper()
         {
-            _updateSpeed = SettingsHelper.GetUpdateEnviromentSpeedsSetting();
+            _updateSpeed = Preferences.Default.GetUpdateEnviromentSpeed();
         }
 
         public bool CanUpdate()
@@ -20,7 +22,7 @@
             }
 
             _lastUpdate = now;
-            _updateSpeed = SettingsHelper.GetUpdateEnviromentSpeedsSetting();
+            _updateSpeed = Preferences.Default.GetUpdateEnviromentSpeed();
             return true;
         }
     }

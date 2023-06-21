@@ -8,7 +8,6 @@ namespace FinalProject.Core.Helpers
     {
         private const string API_KEY = "sk-oiUt648ed920d51cd1302";
 
-
         private static RestClient GetClient()
         {
             var options = new RestClientOptions("https://perenual.com/api");
@@ -19,9 +18,6 @@ namespace FinalProject.Core.Helpers
         {
             const string DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/45/45777.png";
 
-            /*            await Task.Delay(500);
-                        return DEFAULT_IMAGE;
-            */
             var urlEscapedName = HttpUtility.UrlEncode(latinPlantname);
             var request = new RestRequest($"/species-list?q={urlEscapedName}&key={API_KEY}");
             try

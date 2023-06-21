@@ -1,4 +1,4 @@
-﻿using FinalProject.Core.Enums;
+﻿using FinalProject.Data.Enums;
 
 namespace FinalProject.Core.Helpers
 {
@@ -7,7 +7,6 @@ namespace FinalProject.Core.Helpers
         private static readonly IDictionary<Routes, string> _routes;
         public static event EventHandler<RoutEventArgs> RoutingHelperNavigationChanged;
         private static readonly Stack<Routes> _previouseRoutes;
-
 
         static RoutingHelper()
         {

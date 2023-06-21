@@ -1,7 +1,7 @@
-﻿using FinalProject.Core.Enums;
-using FinalProject.Core.Helpers;
+﻿using FinalProject.Core.Extensions;
 using FinalProject.Core.ObservableModels;
-using FinalProject.Persistence.Models;
+using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Core.ValidationModels
@@ -17,7 +17,7 @@ namespace FinalProject.Core.ValidationModels
                 .Select(x =>
                 {
                     var (min, max) = x.GetPreferredTemperatures();
-                    return $"{min} till {max} {SettingsHelper.GetTemperatureUnitSetting().GetSymbol()}";
+                    return $"{min} till {max} {Preferences.Default.GetTemperatureUnit().GetSymbol()}";
                 }).ToArray();
 
             TemperatureRanges = new ComboboxModel(temperatureValues, 1);
@@ -70,28 +70,28 @@ namespace FinalProject.Core.ValidationModels
 
         internal override Plant ConvertToModel()
         {
-            var temperatureRange = Enum.GetValues<Enums.TemperatureRanges>()[TemperatureRanges.ChosenIndex];
+            var temperatureRange = Enum.GetValues<TemperatureRanges>()[TemperatureRanges.ChosenIndex];
             var (minTemperature, maxTemperature) = temperatureRange switch
             {
-                Enums.TemperatureRanges._0_till_10 => (0, 10),
-                Enums.TemperatureRanges._10_till_20 => (10, 20),
-                Enums.TemperatureRanges._20_till_30 => (20, 30),
+                Data.Enums.TemperatureRanges._0_till_10 => (0, 10),
+                Data.Enums.TemperatureRanges._10_till_20 => (10, 20),
+                Data.Enums.TemperatureRanges._20_till_30 => (20, 30),
                 _ => throw new NotImplementedException(),
             };
 
-            var humidityRanges = Enum.GetValues<Enums.HumidityRanges>()[HumidityRanges.ChosenIndex];
+            var humidityRanges = Enum.GetValues<HumidityRanges>()[HumidityRanges.ChosenIndex];
             var (minHumidity, maxHumidity) = humidityRanges switch
             {
-                Enums.HumidityRanges._0_till_10 => (0, 10),
-                Enums.HumidityRanges._10_till_20 => (10, 20),
-                Enums.HumidityRanges._20_till_30 => (20, 30),
-                Enums.HumidityRanges._30_till_40 => (30, 40),
-                Enums.HumidityRanges._40_till_50 => (40, 50),
-                Enums.HumidityRanges._50_till_60 => (50, 60),
-                Enums.HumidityRanges._60_till_70 => (60, 70),
-                Enums.HumidityRanges._70_till_80 => (70, 80),
-                Enums.HumidityRanges._80_till_90 => (80, 90),
-                Enums.HumidityRanges._90_till_100 => (90, 100),
+                Data.Enums.HumidityRanges._0_till_10 => (0, 10),
+                Data.Enums.HumidityRanges._10_till_20 => (10, 20),
+                Data.Enums.HumidityRanges._20_till_30 => (20, 30),
+                Data.Enums.HumidityRanges._30_till_40 => (30, 40),
+                Data.Enums.HumidityRanges._40_till_50 => (40, 50),
+                Data.Enums.HumidityRanges._50_till_60 => (50, 60),
+                Data.Enums.HumidityRanges._60_till_70 => (60, 70),
+                Data.Enums.HumidityRanges._70_till_80 => (70, 80),
+                Data.Enums.HumidityRanges._80_till_90 => (80, 90),
+                Data.Enums.HumidityRanges._90_till_100 => (90, 100),
                 _ => throw new NotImplementedException(),
             };
 

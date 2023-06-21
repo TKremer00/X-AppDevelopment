@@ -1,7 +1,7 @@
-﻿using FinalProject.Communication.Data.Enums;
-using FinalProject.Communication.Data.Models;
+﻿using FinalProject.Data.Enums;
+using FinalProject.Data.Models;
 using Shiny.BluetoothLE;
-using CharacteristicExtensions = FinalProject.Communication.Data.Enums.CharacteristicExtensions;
+using CharacteristicExtensions = FinalProject.Data.Enums.CharacteristicExtensions;
 
 namespace FinalProject.Communication.Communication
 {
@@ -19,46 +19,40 @@ namespace FinalProject.Communication.Communication
         {
             const string NORDIC_THINGY_UUID = "00000000-0000-0000-0000-ca5d92b32ecd";
             const string PAIRING_CODE = "123456";
+
+            if (_bleManager.IsScanning)
+            {
+                return;
+            }
+
+            var scanner = _bleManager.CreateManagedScanner();
+
             try
             {
-                if (_bleManager.IsScanning)
-                {
-                    return;
-                }
-
-                var scanner = _bleManager.CreateManagedScanner();
-
-                try
-                {
-                    await scanner.Start(predicate: scanResult => scanResult.Peripheral.Uuid == NORDIC_THINGY_UUID);
-                }
-                catch (Java.Lang.NullPointerException)
-                {
-                    StateChanged?.Invoke(this, BluetoothStates.BluetoothNotEnabled);
-                    return;
-                }
-
-                StateChanged.Invoke(this, BluetoothStates.Connecting);
-                await Task.Delay(TimeSpan.FromSeconds(10));
-
-                var resultedPeripheral = scanner.Peripherals.FirstOrDefault();
-                if (resultedPeripheral == null)
-                {
-                    StateChanged?.Invoke(this, BluetoothStates.NoAvailableDevices);
-                    return;
-                }
-
-                _peripheral = resultedPeripheral.Peripheral;
-                await _peripheral.ConnectAsync(timeout: TimeSpan.FromSeconds(30));
-                var isPaired = _peripheral.TryPairingRequest(PAIRING_CODE);
-
-                isPaired.Subscribe(Paired);
-                scanner.Stop();
+                await scanner.Start(predicate: scanResult => scanResult.Peripheral.Uuid == NORDIC_THINGY_UUID);
             }
-            catch (Exception e)
+            catch (Java.Lang.NullPointerException)
             {
-                var test = e;
+                StateChanged?.Invoke(this, BluetoothStates.BluetoothNotEnabled);
+                return;
             }
+
+            StateChanged.Invoke(this, BluetoothStates.Connecting);
+            await Task.Delay(TimeSpan.FromSeconds(10));
+
+            var resultedPeripheral = scanner.Peripherals.FirstOrDefault();
+            if (resultedPeripheral == null)
+            {
+                StateChanged?.Invoke(this, BluetoothStates.NoAvailableDevices);
+                return;
+            }
+
+            _peripheral = resultedPeripheral.Peripheral;
+            await _peripheral.ConnectAsync(timeout: TimeSpan.FromSeconds(30));
+            var isPaired = _peripheral.TryPairingRequest(PAIRING_CODE);
+
+            isPaired.Subscribe(Paired);
+            scanner.Stop();
         }
 
         public partial void Disconnect()

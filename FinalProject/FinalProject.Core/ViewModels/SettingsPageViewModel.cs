@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using FinalProject.Core.Enums;
+using FinalProject.Core.Extensions;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
+using FinalProject.Data.Enums;
 
 namespace FinalProject.Core.ViewModels
 {
@@ -32,8 +33,8 @@ namespace FinalProject.Core.ViewModels
 
         private async Task HandleUpdateSettingsCommand()
         {
-            SettingsHelper.SetSetting(TemperatureSetting);
-            SettingsHelper.SetSetting(UpdateEnviromentSpeedSetting);
+            Preferences.Default.SetSetting(TemperatureSetting);
+            Preferences.Default.SetSetting(UpdateEnviromentSpeedSetting);
 
             await ToasterHelper.Show("Updated Settings");
 

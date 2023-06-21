@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using FinalProject.Persistence.Models;
+using FinalProject.Data.Models;
 
 namespace FinalProject.Core.ObservableModels
 {

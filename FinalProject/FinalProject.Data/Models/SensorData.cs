@@ -1,6 +1,6 @@
-﻿using FinalProject.Communication.Data.Enums;
+﻿using FinalProject.Data.Enums;
 
-namespace FinalProject.Communication.Data.Models
+namespace FinalProject.Data.Models
 {
     public class SensorData
     {
