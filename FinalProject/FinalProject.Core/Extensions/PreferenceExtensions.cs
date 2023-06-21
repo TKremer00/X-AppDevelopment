@@ -29,6 +29,5 @@ namespace FinalProject.Core.Extensions
         {
             return preferences.GetUpdateEnviromentSpeedsSetting().GetSecconds();
         }
-
     }
 }

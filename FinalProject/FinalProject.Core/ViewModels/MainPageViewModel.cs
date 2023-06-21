@@ -32,16 +32,8 @@ namespace FinalProject.Core.ViewModels
             _temperatureService = temperatureService;
             _bluetoothNotifier = bluetoothNotifier;
 
-            // TODO: get historical data to seed the temperatures.
             _temperatures = new();
-
-            var updateHelpers = new Dictionary<Characteristics, UpdateHelper>();
-            foreach (var characteristic in Enum.GetValues<Characteristics>())
-            {
-                updateHelpers.Add(characteristic, new UpdateHelper());
-            }
-
-            _updateHelpers = updateHelpers;
+            _updateHelpers = UpdateHelper.GenerateAllHelpers();
 
             _ = UpdatePlants();
             _ = UpdateTemperature();
