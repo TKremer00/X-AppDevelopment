@@ -32,7 +32,7 @@ namespace FinaltProject.Persistence.Test.Repositories
                 Assert.That(mostRecent, Is.Not.Null);
                 Assert.That(mostRecent.Any(), Is.True);
                 Assert.That(mostRecent, Has.Count.EqualTo(count));
-                Assert.That(mostRecent, Is.EquivalentTo(plants));
+                Assert.That(mostRecent, Is.EquivalentTo(expectedItems));
             });
         }
 
