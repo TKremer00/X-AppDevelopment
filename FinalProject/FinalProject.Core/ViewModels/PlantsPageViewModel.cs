@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using FinalProject.Communication.Communication;
+using FinalProject.Core.Extensions;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Core.Services;
@@ -9,14 +11,17 @@ namespace FinalProject.Core.ViewModels
 {
     public class PlantsPageViewModel : BaseViewModel
     {
+        private readonly object _updatePlantsLock;
         private string _searchPlantName;
         private readonly PlantService _service;
         private List<Plant> _plants;
 
-        public PlantsPageViewModel(PlantService service)
+        public PlantsPageViewModel(PlantService service, IBluetoothNotifier bluetoothNotifier)
         {
+            _updatePlantsLock = new object();
             _service = service;
             _plants = new List<Plant>();
+            bluetoothNotifier.SensorDataChanged += SensorDataChanged;
             _ = UpdatePlantsAsync();
             GoToAddPlant = new AsyncRelayCommand(HandleGoToAddPlantAsync);
             RoutingHelper.RoutingHelperNavigationChanged += NavigationChanged;
@@ -26,13 +31,16 @@ namespace FinalProject.Core.ViewModels
         {
             var plants = await _service.GetPlantsAsync();
 
-            if (_plants?.LastOrDefault()?.Id == plants.LastOrDefault()?.Id)
+            lock (_updatePlantsLock)
             {
-                return;
-            }
+                if (_plants?.LastOrDefault()?.Id == plants.LastOrDefault()?.Id)
+                {
+                    return;
+                }
 
-            _plants = plants;
-            OnPropertyChanged(nameof(Plants));
+                _plants = plants;
+                OnPropertyChanged(nameof(Plants));
+            }
         }
 
         public string SearchPlantName
@@ -48,6 +56,28 @@ namespace FinalProject.Core.ViewModels
         public IEnumerable<ObservablePlant> Plants => _plants.Select(x => new ObservablePlant(x)).Where(FilterSearchPlant);
 
         public AsyncRelayCommand GoToAddPlant { get; }
+
+        private async void SensorDataChanged(object sender, SensorData e)
+        {
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                if (e.Characteristic == Characteristics.Temperature)
+                {
+                    lock (_updatePlantsLock)
+                    {
+                        Plants.UpdateAmbient((p, v) => p.UpdateTemperature(v), e.Value);
+                    }
+                }
+                else if (e.Characteristic == Characteristics.Humidity)
+                {
+                    lock (_updatePlantsLock)
+                    {
+                        Plants.UpdateAmbient((p, v) => p.UpdateHumidity(v), e.Value);
+                    }
+
+                }
+            });
+        }
 
         private async void NavigationChanged(object sender, RoutEventArgs e)
         {

@@ -68,10 +68,10 @@ namespace FinalProject.Communication.Communication
         {
             return characteristic switch
             {
-                Characteristics.Temperature => new byte[] { (byte)(_random.Next(32) + 15), 0, 0, 0 },
-                Characteristics.Pressure => new byte[] { (byte)(_random.Next(150) + 90), 0, 0, 0 },
-                Characteristics.Humidity => new byte[] { (byte)(_random.Next(65) + 35), 0, 0, 0 },
-                Characteristics.IndoorAirQuality => new byte[] { (byte)(_random.Next(115) + 15), 0, 0, 0 },
+                Characteristics.Temperature => new byte[] { (byte)_random.Next(15, 32), 0, 0, 0 },
+                Characteristics.Pressure => new byte[] { (byte)_random.Next(90, 150), 0, 0, 0 },
+                Characteristics.Humidity => new byte[] { (byte)_random.Next(35, 65), 0, 0, 0 },
+                Characteristics.IndoorAirQuality => new byte[] { (byte)_random.Next(15, 115), 0, 0, 0 },
                 Characteristics.BatteryVoltage => new byte[] { 200, 0, 0, 0 },
                 _ => throw new NotImplementedException(),
             };

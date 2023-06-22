@@ -1,24 +1,46 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FinalProject.Data.Enums;
 using FinalProject.Data.Models;
 
 namespace FinalProject.Core.ObservableModels
 {
     public class ObservablePlant : ObservableObject
     {
-        private Color _backgroundColor;
+        private readonly object _withinBoundsLock;
+        private bool _isTemperatureWithinBounds;
+        private bool _isHumidityWithinBounds;
 
         public ObservablePlant(Plant plant)
         {
             Plant = plant;
-            _backgroundColor = Colors.Transparent;
+            _withinBoundsLock = new object();
         }
 
         public Plant Plant { get; }
 
-        public Color BackgroundColor
+        public PlantAmbientEnviroment AmbientEnviromentStatus => (_isTemperatureWithinBounds, _isHumidityWithinBounds) switch
         {
-            get => _backgroundColor;
-            set => SetProperty(ref _backgroundColor, value);
+            (true, true) => PlantAmbientEnviroment.Good,
+            (false, false) => PlantAmbientEnviroment.Bad,
+            _ => PlantAmbientEnviroment.Partial,
+        };
+
+        public void UpdateTemperature(int temperature)
+        {
+            lock (_withinBoundsLock)
+            {
+                _isTemperatureWithinBounds = temperature < Plant.MinTemperature || temperature < Plant.MaxTemperature;
+                OnPropertyChanged(nameof(AmbientEnviromentStatus));
+            }
+        }
+
+        public void UpdateHumidity(int humidity)
+        {
+            lock (_withinBoundsLock)
+            {
+                _isHumidityWithinBounds = humidity < Plant.MinHumidity || humidity < Plant.MaxHumidity;
+                OnPropertyChanged(nameof(AmbientEnviromentStatus));
+            }
         }
     }
 }

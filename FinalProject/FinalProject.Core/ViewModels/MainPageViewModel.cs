@@ -15,8 +15,8 @@ namespace FinalProject.Core.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
+        private readonly object _updatePlantsLock;
         private const int MAX_TEMPERATURES = 10;
-
         private readonly PlantService _plantService;
         private readonly TemperatureService _temperatureService;
         private readonly IBluetoothNotifier _bluetoothNotifier;
@@ -30,6 +30,7 @@ namespace FinalProject.Core.ViewModels
             _plantService = plantService;
             _temperatureService = temperatureService;
             _bluetoothNotifier = bluetoothNotifier;
+            _updatePlantsLock = new object();
 
             _temperatures = new();
 
@@ -81,13 +82,17 @@ namespace FinalProject.Core.ViewModels
             var mostRecentPlants = await _plantService.GetMostRecentAsync();
             var plants = mostRecentPlants.Select(x => new ObservablePlant(x)).ToList();
 
-            if (Plants?.FirstOrDefault()?.Plant.Id == plants.FirstOrDefault()?.Plant.Id)
+            lock (_updatePlantsLock)
             {
-                return;
-            }
+                if (Plants?.FirstOrDefault()?.Plant.Id == plants.FirstOrDefault()?.Plant.Id)
+                {
+                    return;
+                }
 
-            Plants = plants;
-            OnPropertyChanged(nameof(Plants));
+                Plants = plants;
+                OnPropertyChanged(nameof(Plants));
+
+            }
         }
 
         public async Task UpdateTemperature()
@@ -131,13 +136,23 @@ namespace FinalProject.Core.ViewModels
                             Label = $"{e.LocalTime:HH:mm:ss}"
                         };
                         _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
+
+                        lock (_updatePlantsLock)
+                        {
+                            Plants.UpdateAmbient((p, v) => p.UpdateTemperature(v), e.Value);
+                        }
+
                         break;
                     case Characteristics.Pressure:
-                        // TODO: fix with real data.
                         Pressure = e.Value;
                         break;
                     case Characteristics.Humidity:
                         Humidity = e.Value;
+
+                        lock (_updatePlantsLock)
+                        {
+                            Plants.UpdateAmbient((p, v) => p.UpdateHumidity(v), e.Value);
+                        }
                         break;
                     case Characteristics.IndoorAirQuality:
                         IndoorAirQuality = e.Value;
