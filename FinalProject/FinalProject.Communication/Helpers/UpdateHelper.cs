@@ -1,29 +1,28 @@
-﻿using FinalProject.Core.Extensions;
-using FinalProject.Data.Enums;
+﻿using FinalProject.Data.Enums;
 
-namespace FinalProject.Core.Helpers
+namespace FinalProject.Communication.Helpers
 {
-    public class UpdateHelper
+    internal class UpdateHelper
     {
-        private long _lastUpdate;
+        private long _lastUpdated;
         private long _updateSpeed;
 
         public UpdateHelper()
         {
-            _updateSpeed = Preferences.Default.GetUpdateEnviromentSpeed();
+            _updateSpeed = UpdateSpeedHelper.GetUpdateSpeedInSeconds();
         }
 
         public bool CanUpdate()
         {
             var now = DateTimeOffset.Now.ToUnixTimeSeconds();
 
-            if (_lastUpdate + _updateSpeed >= now)
+            if (_lastUpdated + _updateSpeed >= now)
             {
                 return false;
             }
 
-            _lastUpdate = now;
-            _updateSpeed = Preferences.Default.GetUpdateEnviromentSpeed();
+            _lastUpdated = now;
+            _updateSpeed = UpdateSpeedHelper.GetUpdateSpeedInSeconds();
             return true;
         }
 
@@ -37,5 +36,7 @@ namespace FinalProject.Core.Helpers
 
             return updateHelpers;
         }
+
+
     }
 }

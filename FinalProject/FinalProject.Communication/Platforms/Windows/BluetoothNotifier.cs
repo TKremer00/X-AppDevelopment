@@ -1,4 +1,5 @@
-﻿using FinalProject.Data.Enums;
+﻿using FinalProject.Communication.Helpers;
+using FinalProject.Data.Enums;
 using FinalProject.Data.Models;
 using Characteristics = FinalProject.Data.Enums.Characteristics;
 
@@ -56,7 +57,7 @@ namespace FinalProject.Communication.Communication
 
                         SensorDataChanged?.Invoke(this, new SensorData(characteristic, GenerateData(characteristic)));
                     }
-                    Thread.Sleep(250);
+                    Thread.Sleep(TimeSpan.FromSeconds(UpdateSpeedHelper.GetUpdateSpeedInSeconds()));
                 }
 
                 Thread.Sleep(500);

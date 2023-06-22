@@ -1,4 +1,5 @@
-﻿using FinalProject.Data.Enums;
+﻿using FinalProject.Communication.Helpers;
+using FinalProject.Data.Enums;
 using FinalProject.Data.Models;
 using Shiny.BluetoothLE;
 using CharacteristicExtensions = FinalProject.Data.Enums.CharacteristicExtensions;
@@ -8,11 +9,13 @@ namespace FinalProject.Communication.Communication
     partial class BluetoothNotifier
     {
         private IPeripheral _peripheral;
+        private IReadOnlyDictionary<Characteristics, UpdateHelper> _updateHelpers;
 
         public partial bool HasConnection() => _peripheral?.IsConnected() ?? false;
 
         partial void Ctor()
         {
+            _updateHelpers = UpdateHelper.GenerateAllHelpers();
         }
 
         public partial async Task Connect()
@@ -91,6 +94,11 @@ namespace FinalProject.Communication.Communication
                 CharacteristicExtensions.BATTERY_VOLTAGE_UUID => Characteristics.BatteryVoltage,
                 _ => throw new NotImplementedException(),
             };
+
+            if (!_updateHelpers[characteristic].CanUpdate())
+            {
+                return Task.CompletedTask;
+            }
 
             if (characteristic == Characteristics.Pressure)
             {

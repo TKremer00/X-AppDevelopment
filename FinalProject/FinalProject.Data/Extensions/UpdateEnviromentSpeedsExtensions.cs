@@ -1,6 +1,6 @@
 ﻿using FinalProject.Data.Enums;
 
-namespace FinalProject.Core.Extensions
+namespace FinalProject.Data.Extensions
 {
     public static class UpdateEnviromentSpeedsExtensions
     {

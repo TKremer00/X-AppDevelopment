@@ -24,7 +24,6 @@ namespace FinalProject.Core.ViewModels
         private int? _pressure;
         private int? _indoorAirQuality;
         private ObservableCollection<ChartItem> _temperatures;
-        private IReadOnlyDictionary<Characteristics, UpdateHelper> _updateHelpers;
 
         public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, IBluetoothNotifier bluetoothNotifier)
         {
@@ -33,7 +32,6 @@ namespace FinalProject.Core.ViewModels
             _bluetoothNotifier = bluetoothNotifier;
 
             _temperatures = new();
-            _updateHelpers = UpdateHelper.GenerateAllHelpers();
 
             _ = UpdatePlants();
             _ = UpdateTemperature();
@@ -122,11 +120,6 @@ namespace FinalProject.Core.ViewModels
 
         private async void SensorDataChanged(object sender, SensorData e)
         {
-            if (!_updateHelpers[e.Characteristic].CanUpdate())
-            {
-                return;
-            }
-
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 switch (e.Characteristic)

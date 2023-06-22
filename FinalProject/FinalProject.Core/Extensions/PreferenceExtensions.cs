@@ -1,5 +1,6 @@
 ﻿using FinalProject.Core.ObservableModels;
 using FinalProject.Data.Enums;
+using FinalProject.Data.Extensions;
 
 namespace FinalProject.Core.Extensions
 {
