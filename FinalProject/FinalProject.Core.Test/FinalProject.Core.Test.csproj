@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,12 +7,12 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+	<UseMaui>true</UseMaui>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Faker.Net" Version="2.0.154" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
     <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinalProject.Persistence\FinalProject.Persistence.csproj" />
-    <ProjectReference Include="..\FinalProject.Test.Helper\FinalProject.Test.Helper.csproj" />
+    <ProjectReference Include="..\FinalProject.Core\FinalProject.Core.csproj" />
+    <ProjectReference Include="..\FinalProject.Data\FinalProject.Data.csproj" />
   </ItemGroup>
 
 </Project>

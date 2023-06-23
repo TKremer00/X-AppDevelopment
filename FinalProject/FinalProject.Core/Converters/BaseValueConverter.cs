@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using FinalProject.Data.Interfaces;
+using System.Globalization;
 
 namespace FinalProject.Core.Converters
 {
@@ -11,6 +12,18 @@ namespace FinalProject.Core.Converters
 
     public abstract class BaseValueConverter<OriginalType, NewType> : IValueConverter<OriginalType, NewType>
     {
+        protected readonly IPreferencesWrapper _preferences;
+
+        public BaseValueConverter()
+        {
+            _preferences = null;
+        }
+
+        public BaseValueConverter(IPreferencesWrapper preferences)
+        {
+            _preferences = preferences;
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not OriginalType tValue)

@@ -1,6 +1,6 @@
-﻿using FinaltProject.Persistence.Test.Helpers;
+﻿using FinaltProject.Test.Helper.Fakers;
 
-namespace FinalProject.Persistence.Test.Helpers
+namespace FinalProject.Test.Helper.Fakers
 {
     public abstract class FakerBase<T> : IFaker<T>
     {

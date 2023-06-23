@@ -1,9 +1,9 @@
 ﻿using FinalProject.Data.Models;
-using FinalProject.Persistence.Test.Helpers;
+using FinalProject.Test.Helper.Fakers;
 
-namespace FinaltProject.Persistence.Test.Helpers
+namespace FinaltProject.Test.Helper.Fakers
 {
-    internal class TemperatureFaker : FakerBase<Temperature>
+    public class TemperatureFaker : FakerBase<Temperature>
     {
         public override Temperature generate()
         {

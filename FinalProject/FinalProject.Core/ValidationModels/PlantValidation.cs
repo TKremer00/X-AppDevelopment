@@ -1,6 +1,7 @@
 ﻿using FinalProject.Core.Extensions;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Data.Enums;
+using FinalProject.Data.Interfaces;
 using FinalProject.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,11 +14,13 @@ namespace FinalProject.Core.ValidationModels
 
         public PlantValidation()
         {
+            var preferences = Application.Current.GetRequiredService<IPreferencesWrapper>();
+
             var temperatureValues = Enum.GetValues<TemperatureRanges>()
                 .Select(x =>
                 {
                     var (min, max) = x.GetPreferredTemperatures();
-                    return $"{min} till {max} {Preferences.Default.GetTemperatureUnit().GetSymbol()}";
+                    return $"{min} till {max} {preferences.GetTemperatureUnit().GetSymbol()}";
                 }).ToArray();
 
             TemperatureRanges = new ComboboxModel(temperatureValues, 1);

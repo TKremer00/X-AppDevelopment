@@ -19,7 +19,8 @@ namespace FinalProject.Core.Extensions
         public static (int Min, int Max) GetPreferredTemperatures(this TemperatureRanges temperatureRanges)
         {
             var (min, max) = GetTemperatures(temperatureRanges);
-            return (TemperatureConverter.temperatureConverter.Convert(min), TemperatureConverter.temperatureConverter.Convert(max));
+            var temperatureConverter = Application.Current.Handler.MauiContext.Services.GetRequiredService<TemperatureConverter>();
+            return (temperatureConverter.Convert(min), temperatureConverter.Convert(max));
         }
     }
 }

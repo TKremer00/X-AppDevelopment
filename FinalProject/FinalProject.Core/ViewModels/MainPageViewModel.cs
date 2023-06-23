@@ -24,11 +24,13 @@ namespace FinalProject.Core.ViewModels
         private int? _pressure;
         private int? _indoorAirQuality;
         private ObservableCollection<ChartItem> _temperatures;
+        private readonly TemperatureConverter _temperatureConverter;
 
-        public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, IBluetoothNotifier bluetoothNotifier)
+        public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, TemperatureConverter temperatureConverter, IBluetoothNotifier bluetoothNotifier)
         {
             _plantService = plantService;
             _temperatureService = temperatureService;
+            _temperatureConverter = temperatureConverter;
             _bluetoothNotifier = bluetoothNotifier;
             _updatePlantsLock = new object();
 
@@ -99,7 +101,7 @@ namespace FinalProject.Core.ViewModels
         {
             var temperatures = await _temperatureService.GetLastTemperaturesAsync(10);
             var charts = temperatures
-                .Select(x => new ChartItem { Value = TemperatureConverter.temperatureConverter.Convert(x.IntValue), Label = $"{x.LocalTime:HH:mm:ss}" })
+                .Select(x => new ChartItem { Value = _temperatureConverter.Convert(x.IntValue), Label = $"{x.LocalTime:HH:mm:ss}" })
                 .ToList();
 
             foreach (var chartItem in charts)
@@ -132,7 +134,7 @@ namespace FinalProject.Core.ViewModels
                     case Characteristics.Temperature:
                         var chartItem = new ChartItem()
                         {
-                            Value = TemperatureConverter.temperatureConverter.Convert(e.Value),
+                            Value = _temperatureConverter.Convert(e.Value),
                             Label = $"{e.LocalTime:HH:mm:ss}"
                         };
                         _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);

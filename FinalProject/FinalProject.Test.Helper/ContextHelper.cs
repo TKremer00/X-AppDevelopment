@@ -1,9 +1,9 @@
 ﻿using FinalProject.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace FinaltProject.Persistence.Test
+namespace FinaltProject.Test.Helper
 {
-    internal static class ContextHelper
+    public static class ContextHelper
     {
         public static PlantsContext GenerateContext()
         {

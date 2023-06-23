@@ -1,4 +1,4 @@
-﻿namespace FinaltProject.Persistence.Test.Helpers
+﻿namespace FinaltProject.Test.Helper.Fakers
 {
     public interface IFaker<T>
     {

@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using FinalProject.Communication.Communication;
+using FinalProject.Core.Converters;
 using FinalProject.Core.Helpers;
 using FinalProject.Core.Services;
 using FinalProject.Core.ViewModels;
 using FinalProject.Data.Enums;
+using FinalProject.Data.Interfaces;
 using FinalProject.Pages;
 using FinalProject.Persistence.Database;
 using FinalProject.Persistence.Extension;
@@ -80,6 +82,14 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddTransient<SettingsPageViewModel>();
         mauiAppBuilder.Services.AddTransient<PlantsPageViewModel>();
         mauiAppBuilder.Services.AddTransient<AddPlantPageViewModel>();
+
+        // Converters
+        mauiAppBuilder.Services.AddSingleton<AmbiantEnviromentStatusToColorConverter>();
+        mauiAppBuilder.Services.AddSingleton<BooleanInverterConverter>();
+        mauiAppBuilder.Services.AddSingleton<TemperatureConverter>();
+
+        // Preferences
+        mauiAppBuilder.Services.AddSingleton<IPreferencesWrapper>(new PreferenceWrapper(Preferences.Default));
 
         return mauiAppBuilder;
     }

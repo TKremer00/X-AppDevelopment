@@ -1,8 +1,8 @@
 ﻿using FinalProject.Data.Models;
 using FinalProject.Persistence.Repositories;
-using FinaltProject.Persistence.Test;
-using FinaltProject.Persistence.Test.Helpers;
 using FinaltProject.Persistence.Test.Repositories;
+using FinaltProject.Test.Helper;
+using FinaltProject.Test.Helper.Fakers;
 using NUnit.Framework;
 
 namespace FinalProject.Persistence.Test.Repositories
