@@ -27,7 +27,9 @@
 
         <mdc:Card Margin="0, 20, 0, 0" >
             <ScrollView Padding="10">
-                <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
+                <VerticalStackLayout>
+                    <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
+                </VerticalStackLayout>
             </ScrollView>
         </mdc:Card>
                 

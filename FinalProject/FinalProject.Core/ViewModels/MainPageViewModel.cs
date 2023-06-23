@@ -137,10 +137,10 @@ namespace FinalProject.Core.ViewModels
                         };
                         _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
 
-                        lock (_updatePlantsLock)
+                        /*lock (_updatePlantsLock)
                         {
                             Plants.UpdateAmbient((p, v) => p.UpdateTemperature(v), e.Value);
-                        }
+                        }*/
 
                         break;
                     case Characteristics.Pressure:
@@ -149,10 +149,10 @@ namespace FinalProject.Core.ViewModels
                     case Characteristics.Humidity:
                         Humidity = e.Value;
 
-                        lock (_updatePlantsLock)
+                        /*lock (_updatePlantsLock)
                         {
                             Plants.UpdateAmbient((p, v) => p.UpdateHumidity(v), e.Value);
-                        }
+                        }*/
                         break;
                     case Characteristics.IndoorAirQuality:
                         IndoorAirQuality = e.Value;

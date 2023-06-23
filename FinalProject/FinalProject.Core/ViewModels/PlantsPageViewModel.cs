@@ -14,13 +14,13 @@ namespace FinalProject.Core.ViewModels
         private readonly object _updatePlantsLock;
         private string _searchPlantName;
         private readonly PlantService _service;
-        private List<Plant> _plants;
+        private List<ObservablePlant> _plants;
 
         public PlantsPageViewModel(PlantService service, IBluetoothNotifier bluetoothNotifier)
         {
             _updatePlantsLock = new object();
             _service = service;
-            _plants = new List<Plant>();
+            _plants = new();
             bluetoothNotifier.SensorDataChanged += SensorDataChanged;
             _ = UpdatePlantsAsync();
             GoToAddPlant = new AsyncRelayCommand(HandleGoToAddPlantAsync);
@@ -33,12 +33,12 @@ namespace FinalProject.Core.ViewModels
 
             lock (_updatePlantsLock)
             {
-                if (_plants?.LastOrDefault()?.Id == plants.LastOrDefault()?.Id)
+                if (_plants?.LastOrDefault()?.Plant.Id == plants.LastOrDefault()?.Id)
                 {
                     return;
                 }
 
-                _plants = plants;
+                _plants = plants.Select(x => new ObservablePlant(x)).ToList();
                 OnPropertyChanged(nameof(Plants));
             }
         }
@@ -53,7 +53,7 @@ namespace FinalProject.Core.ViewModels
             }
         }
 
-        public IEnumerable<ObservablePlant> Plants => _plants.Select(x => new ObservablePlant(x)).Where(FilterSearchPlant);
+        public IEnumerable<ObservablePlant> Plants => _plants.Where(FilterSearchPlant);
 
         public AsyncRelayCommand GoToAddPlant { get; }
 
