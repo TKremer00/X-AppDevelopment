@@ -38,6 +38,7 @@ namespace FinalProject.Communication.Communication
 
         public partial void Disconnect()
         {
+            StateChanged.Invoke(this, BluetoothStates.Connect);
             _isRunning = false;
         }
 

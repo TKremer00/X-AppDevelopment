@@ -80,7 +80,7 @@
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Humidity" Style="{StaticResource HeaderLabelStyle}"/>
 
-                        <mdc:Label Text="{Binding Humidity, StringFormat='{0}%', TargetNullValue='No value'}" Style="{StaticResource LargeLabel}"/>
+                        <mdc:Label Text="{Binding Humidity, StringFormat='{0}%', TargetNullValue='0'}" Style="{StaticResource LargeLabel}"/>
 
                         <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}"/>
                     </VerticalStackLayout>
@@ -89,8 +89,8 @@
                 <mdc:Card Grid.Column="1" Style="{DynamicResource FilledCardStyle}" BackgroundColour="{StaticResource OnBackgroundColor}">
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Pressure" Style="{StaticResource HeaderLabelStyle}"/>
-                        <mdc:Label Text="{Binding Pressure, TargetNullValue='No value'}" Style="{StaticResource LargeLabel}"/>
-                        <mdc:Label Text="Pha" Style="{StaticResource HeaderLabelStyle}"/>
+                        <mdc:Label Text="{Binding Pressure, TargetNullValue='0'}" Style="{StaticResource LargeLabel}"/>
+                        <mdc:Label Text="hPa" Style="{StaticResource HeaderLabelStyle}"/>
                     </VerticalStackLayout>
                 </mdc:Card>
             </Grid>
@@ -105,8 +105,8 @@
                     <VerticalStackLayout Padding="0, 20" VerticalOptions="Center">
                         <mdc:Label Text="Air quality" Style="{StaticResource HeaderLabelStyle}"/>
 
-                        <mdc:Label Text="{Binding IndoorAirQuality, TargetNullValue='No value'}" Style="{StaticResource LargeLabel}"/>
-                        <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}"/>
+                        <mdc:Label Text="{Binding IndoorAirQuality, TargetNullValue='0'}" Style="{StaticResource LargeLabel}"/>
+                        <mdc:Label Text="IAQI" Style="{StaticResource HeaderLabelStyle}"/>
                     </VerticalStackLayout>
                 </mdc:Card>
 

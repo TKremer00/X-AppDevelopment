@@ -14,6 +14,10 @@ namespace FinalProject.Core.Test.Services
             _repository = new PlantRepository(ContextHelper.GenerateContext());
         }
 
+        [Test]
+        public async Task AddPlantTest()
+        {
 
+        }
     }
 }

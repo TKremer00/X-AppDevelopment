@@ -170,7 +170,14 @@ namespace FinalProject.Core.ViewModels
 
         private async Task HandleBluetoothCommand()
         {
-            await _bluetoothNotifier.Connect();
+            if (!_bluetoothNotifier.HasConnection())
+            {
+                await _bluetoothNotifier.Connect();
+            }
+            else
+            {
+                _bluetoothNotifier.Disconnect();
+            }
         }
 
         private async Task HandleGoToPlantsCommand()
