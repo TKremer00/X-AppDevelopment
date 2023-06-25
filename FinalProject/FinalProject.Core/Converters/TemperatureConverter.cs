@@ -14,8 +14,13 @@ namespace FinalProject.Core.Converters
 
         public override int Convert(int value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (parameter is not Func<TemperatureUnits> temperatureUnit)
+            {
+                temperatureUnit = _preferences.GetTemperatureUnit;
+            }
+
             var doubleValue = (double)value;
-            return _preferences.GetTemperatureUnit() switch
+            return temperatureUnit.Invoke() switch
             {
                 TemperatureUnits.Celsius => value,
                 TemperatureUnits.Fahrenheit => (int)Math.Round(doubleValue * 1.8 + 32),
@@ -26,8 +31,13 @@ namespace FinalProject.Core.Converters
 
         public override int ConvertBack(int value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (parameter is not Func<TemperatureUnits> temperatureUnit)
+            {
+                temperatureUnit = _preferences.GetTemperatureUnit;
+            }
+
             var doubleValue = (double)value;
-            return _preferences.GetTemperatureUnit() switch
+            return temperatureUnit.Invoke() switch
             {
                 TemperatureUnits.Celsius => value,
                 TemperatureUnits.Fahrenheit => (int)Math.Round((doubleValue - 32) * .5556),

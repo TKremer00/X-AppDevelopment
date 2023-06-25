@@ -1,4 +1,5 @@
 ﻿using FinalProject.Data.Interfaces;
+using FinalProject.Data.Models;
 
 namespace FinalProject.Core.Helpers
 {
@@ -10,6 +11,8 @@ namespace FinalProject.Core.Helpers
         {
             _preferences = preferences;
         }
+
+        public event EventHandler<PreferenceUpdate> SettingChanged;
 
         public bool ContainsKey(string key)
         {
@@ -23,6 +26,7 @@ namespace FinalProject.Core.Helpers
 
         public void Set<T>(string key, T value)
         {
+            SettingChanged?.Invoke(this, new PreferenceUpdate { Key = key, NewValue = value, OldValue = Get<T>(key, default) });
             _preferences.Set(key, value);
         }
     }

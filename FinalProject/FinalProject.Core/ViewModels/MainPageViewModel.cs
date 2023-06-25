@@ -7,6 +7,7 @@ using FinalProject.Core.Helpers;
 using FinalProject.Core.ObservableModels;
 using FinalProject.Core.Services;
 using FinalProject.Data.Enums;
+using FinalProject.Data.Interfaces;
 using FinalProject.Data.Models;
 using System.Collections.ObjectModel;
 using System.Reactive.Linq;
@@ -16,6 +17,7 @@ namespace FinalProject.Core.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         private readonly object _updatePlantsLock;
+        private readonly object _updateTemperaturesLock;
         private const int MAX_TEMPERATURES = 10;
         private readonly PlantService _plantService;
         private readonly TemperatureService _temperatureService;
@@ -26,13 +28,15 @@ namespace FinalProject.Core.ViewModels
         private ObservableCollection<ChartItem> _temperatures;
         private readonly TemperatureConverter _temperatureConverter;
 
-        public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, TemperatureConverter temperatureConverter, IBluetoothNotifier bluetoothNotifier)
+
+        public MainPageViewModel(PlantService plantService, TemperatureService temperatureService, TemperatureConverter temperatureConverter, IBluetoothNotifier bluetoothNotifier, IPreferencesWrapper preferences)
         {
             _plantService = plantService;
             _temperatureService = temperatureService;
             _temperatureConverter = temperatureConverter;
             _bluetoothNotifier = bluetoothNotifier;
             _updatePlantsLock = new object();
+            _updateTemperaturesLock = new object();
 
             _temperatures = new();
 
@@ -42,6 +46,7 @@ namespace FinalProject.Core.ViewModels
             _bluetoothNotifier.StateChanged += BluetoothNotifierStateChanged;
             _bluetoothNotifier.SensorDataChanged += SensorDataChanged;
             RoutingHelper.RoutingHelperNavigationChanged += RoutingHelperNavigationChanged;
+            preferences.SettingChanged += PreferencesSettingChanged;
 
             BluetoothConnectionText = BluetoothStates.Connect;
             GoToPlantsCommand = new AsyncRelayCommand(HandleGoToPlantsCommand);
@@ -100,13 +105,17 @@ namespace FinalProject.Core.ViewModels
         public async Task UpdateTemperature()
         {
             var temperatures = await _temperatureService.GetLastTemperaturesAsync(10);
-            var charts = temperatures
-                .Select(x => new ChartItem { Value = _temperatureConverter.Convert(x.IntValue), Label = $"{x.LocalTime:HH:mm:ss}" })
-                .ToList();
 
-            foreach (var chartItem in charts)
+            lock (_updateTemperaturesLock)
             {
-                _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
+                var charts = temperatures
+                    .Select(x => new ChartItem { Value = _temperatureConverter.Convert(x.IntValue), Label = $"{x.LocalTime:HH:mm:ss}" })
+                    .ToList();
+
+                foreach (var chartItem in charts)
+                {
+                    _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
+                }
             }
         }
 
@@ -125,6 +134,24 @@ namespace FinalProject.Core.ViewModels
             OnPropertyChanged(nameof(BluetoothConnectionText));
         }
 
+        private void PreferencesSettingChanged(object sender, PreferenceUpdate e)
+        {
+            if (e.Key != Settings.TemperatureUnit.ToString())
+            {
+                return;
+            }
+
+            lock (_updateTemperaturesLock)
+            {
+                foreach (var chartItem in _temperatures)
+                {
+                    var celsius = (int)_temperatureConverter.ConvertBack(chartItem, null, () => (TemperatureUnits)e.OldValue, null);
+                    chartItem.Value = _temperatureConverter.Convert(celsius);
+                }
+            }
+        }
+
+
         private async void SensorDataChanged(object sender, SensorData e)
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -137,12 +164,16 @@ namespace FinalProject.Core.ViewModels
                             Value = _temperatureConverter.Convert(e.Value),
                             Label = $"{e.LocalTime:HH:mm:ss}"
                         };
-                        _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
 
-                        /*lock (_updatePlantsLock)
+                        lock (_updateTemperaturesLock)
+                        {
+                            _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
+                        }
+
+                        lock (_updatePlantsLock)
                         {
                             Plants.UpdateAmbient((p, v) => p.UpdateTemperature(v), e.Value);
-                        }*/
+                        }
 
                         break;
                     case Characteristics.Pressure:
@@ -151,10 +182,10 @@ namespace FinalProject.Core.ViewModels
                     case Characteristics.Humidity:
                         Humidity = e.Value;
 
-                        /*lock (_updatePlantsLock)
+                        lock (_updatePlantsLock)
                         {
                             Plants.UpdateAmbient((p, v) => p.UpdateHumidity(v), e.Value);
-                        }*/
+                        }
                         break;
                     case Characteristics.IndoorAirQuality:
                         IndoorAirQuality = e.Value;
