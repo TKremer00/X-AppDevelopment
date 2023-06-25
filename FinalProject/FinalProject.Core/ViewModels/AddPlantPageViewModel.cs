@@ -17,7 +17,7 @@ namespace FinalProject.Core.ViewModels
             Plant = new PlantValidation();
         }
 
-        public PlantValidation Plant { get; }
+        public PlantValidation Plant { get; private set; }
 
         public bool IsLoading
         {
@@ -42,7 +42,10 @@ namespace FinalProject.Core.ViewModels
 
             IsLoading = false;
 
-            await ToasterHelper.Show($"Save {Plant.PlantName} to database");
+            await ToasterHelper.Show($"Saved {Plant.PlantName} to database");
+            
+            // clear the old plant data
+            Plant = new PlantValidation();
 
             await RoutingHelper.NavigateBackAsync();
         }

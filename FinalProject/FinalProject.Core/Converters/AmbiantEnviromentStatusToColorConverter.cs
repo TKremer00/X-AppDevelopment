@@ -22,7 +22,7 @@ namespace FinalProject.Core.Converters
 
         public override PlantAmbientEnviroment ConvertBack(Color value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return PlantAmbientEnviroment.Good;
         }
     }
 }

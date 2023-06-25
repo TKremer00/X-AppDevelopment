@@ -15,22 +15,37 @@
         <AbsoluteLayout>
             <VerticalStackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                                  AbsoluteLayout.LayoutFlags="All">
-                <mdc:TextField LabelText="Latin plant name"
-                               SupportingText=""
-                               CommandParameter="LatinPlantName"
-                               Loaded="LoadedTextField"/>
+
+                <Grid>
+                    <mdc:TextField LabelText="Latin plant name"
+                                   SupportingText=""
+                                   CommandParameter="LatinPlantName"
+                                   Style="{DynamicResource FilledTextFieldStyle}"
+                                   Loaded="LoadedTextField"/>
+                    <Entry Grid.Column="0"
+                           BackgroundColor="Transparent" 
+                           Text="{Binding Plant.LatinPlantName}" 
+                           TextColor="Transparent" 
+                           Opacity="0"/>
+                </Grid>
 
                 <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
                                 IsVisible="{Binding Plant.HasLatinPlantNameError}" 
                                 Margin="0, -15, 0, 0"
                                 ItemTemplate="{StaticResource ErrorTemplate}" />
 
-                <mdc:TextField LabelText="Plant name"
-                               SupportingText=""
-                               Style="{DynamicResource FilledTextFieldStyle}"
-                               CommandParameter="PlantName"
-                               Loaded="LoadedTextField"
-                               Margin="0, 20, 0, 0"/>
+                <Grid Margin="0, 20, 0, 0">
+                    <mdc:TextField LabelText="Plant name"
+                                   SupportingText=""
+                                   Style="{DynamicResource FilledTextFieldStyle}"
+                                   CommandParameter="PlantName"
+                                   Loaded="LoadedTextField"/>
+                    <Entry Grid.Column="0"
+                           BackgroundColor="Transparent" 
+                           Text="{Binding Plant.PlantName}" 
+                           TextColor="Transparent" 
+                           Opacity="0"/>
+                </Grid>
 
                 <CollectionView ItemsSource="{Binding Plant.LatinPlantNameValidationResult}"
                                 IsVisible="{Binding Plant.HasPlantNameError}" 

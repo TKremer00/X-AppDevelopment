@@ -2,4 +2,6 @@
 
 - Abies alba - Silver fir
 - Abies alba 'Pyramidalis' - European silver fir
-- Abies alba zas - Conifer
+- Abies concolor - Concolor Fir
+- Abies concolor 'Candicans' - Candicans White Fir
+- Abies fraseri - Fraser Fir

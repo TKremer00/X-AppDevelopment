@@ -40,6 +40,7 @@ namespace FinalProject.Core.ViewModels
 
                 _plants = plants.Select(x => new ObservablePlant(x)).ToList();
                 OnPropertyChanged(nameof(Plants));
+                OnPropertyChanged(nameof(HasPlants));
             }
         }
 
@@ -50,10 +51,13 @@ namespace FinalProject.Core.ViewModels
             {
                 SetProperty(ref _searchPlantName, value);
                 OnPropertyChanged(nameof(Plants));
+                OnPropertyChanged(nameof(HasPlants));
             }
         }
 
         public IEnumerable<ObservablePlant> Plants => _plants.Where(FilterSearchPlant);
+
+        public bool HasPlants => Plants.Any();
 
         public AsyncRelayCommand GoToAddPlant { get; }
 

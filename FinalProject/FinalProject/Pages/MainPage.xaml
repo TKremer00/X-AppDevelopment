@@ -62,11 +62,11 @@
                 </mdc:Card.GestureRecognizers>
                 
                 <VerticalStackLayout>
-                    <mdc:Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     
                     <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
                     
-                    <mdc:Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </VerticalStackLayout>
             </mdc:Card>
 
@@ -82,7 +82,7 @@
 
                         <mdc:Label Text="{Binding Humidity, StringFormat='{0}%', TargetNullValue='0'}" Style="{StaticResource LargeLabel}"/>
 
-                        <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}"/>
+                        <mdc:Label Text="" Style="{StaticResource HeaderLabelStyle}" />
                     </VerticalStackLayout>
                 </mdc:Card>
 
@@ -117,7 +117,7 @@
                         </mdc:Card.GestureRecognizers>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=bluetoothblack.png, Dark=bluetoothwhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
-                            <mdc:Label Text="{Binding BluetoothConnectionText}" ForegroundColor="{StaticResource PrimaryContainerColor}" />
+                            <Label Text="{Binding BluetoothConnectionText}" TextColor="{StaticResource PrimaryContainerColor}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
                         </HorizontalStackLayout>
                     </mdc:Card>
 
@@ -127,7 +127,7 @@
                         </mdc:Card.GestureRecognizers>
                         <HorizontalStackLayout Padding="0, 20" VerticalOptions="Center">
                             <Image Source="{AppThemeBinding Light=settingsblack.png, Dark=settingswhite.png}" HeightRequest="32" WidthRequest="32" Margin="10,0, 20, 0"/>
-                            <mdc:Label Text="Settings" ForegroundColor="{StaticResource PrimaryContainerColor}" />
+                            <Label Text="Settings" TextColor="{StaticResource PrimaryContainerColor}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                         </HorizontalStackLayout>
                     </mdc:Card>
                 </VerticalStackLayout>

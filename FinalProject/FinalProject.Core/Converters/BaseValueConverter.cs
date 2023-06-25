@@ -28,7 +28,7 @@ namespace FinalProject.Core.Converters
         {
             if (value is not OriginalType tValue)
             {
-                throw new ArgumentException($"Argument is not of type {nameof(OriginalType)}");
+                throw new ArgumentException($"Argument could not be converter because the argument is not of type {typeof(OriginalType).Name}");
             }
 
             return Convert(tValue, targetType, parameter, culture);
@@ -38,7 +38,7 @@ namespace FinalProject.Core.Converters
         {
             if (value is not NewType tValue)
             {
-                throw new ArgumentException($"Argument is not of type {nameof(OriginalType)}");
+                throw new ArgumentException($"Argument could not be converter back because the argument is not of type {typeof(OriginalType).Name}");
             }
 
             return ConvertBack(tValue, targetType, parameter, culture);

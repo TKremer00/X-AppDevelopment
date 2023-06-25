@@ -18,7 +18,7 @@ namespace FinalProject.Core.ViewModels
     {
         private readonly object _updatePlantsLock;
         private readonly object _updateTemperaturesLock;
-        private const int MAX_TEMPERATURES = 10;
+        private const int MAX_TEMPERATURES = 5;
         private readonly PlantService _plantService;
         private readonly TemperatureService _temperatureService;
         private readonly IBluetoothNotifier _bluetoothNotifier;
@@ -104,7 +104,7 @@ namespace FinalProject.Core.ViewModels
 
         public async Task UpdateTemperature()
         {
-            var temperatures = await _temperatureService.GetLastTemperaturesAsync(10);
+            var temperatures = await _temperatureService.GetLastTemperaturesAsync(MAX_TEMPERATURES);
 
             lock (_updateTemperaturesLock)
             {
@@ -128,6 +128,7 @@ namespace FinalProject.Core.ViewModels
 
             await UpdatePlants();
         }
+
         private void BluetoothNotifierStateChanged(object sender, BluetoothStates e)
         {
             BluetoothConnectionText = e;
@@ -145,12 +146,11 @@ namespace FinalProject.Core.ViewModels
             {
                 foreach (var chartItem in _temperatures)
                 {
-                    var celsius = (int)_temperatureConverter.ConvertBack(chartItem, null, () => (TemperatureUnits)e.OldValue, null);
+                    var celsius = (int)_temperatureConverter.ConvertBack((int)chartItem.Value, null, () => (TemperatureUnits)e.OldValue, null);
                     chartItem.Value = _temperatureConverter.Convert(celsius);
                 }
             }
         }
-
 
         private async void SensorDataChanged(object sender, SensorData e)
         {
@@ -169,23 +169,12 @@ namespace FinalProject.Core.ViewModels
                         {
                             _temperatures.AddAndRemoveFirst(MAX_TEMPERATURES, chartItem);
                         }
-
-                        lock (_updatePlantsLock)
-                        {
-                            Plants.UpdateAmbient((p, v) => p.UpdateTemperature(v), e.Value);
-                        }
-
                         break;
                     case Characteristics.Pressure:
                         Pressure = e.Value;
                         break;
                     case Characteristics.Humidity:
                         Humidity = e.Value;
-
-                        lock (_updatePlantsLock)
-                        {
-                            Plants.UpdateAmbient((p, v) => p.UpdateHumidity(v), e.Value);
-                        }
                         break;
                     case Characteristics.IndoorAirQuality:
                         IndoorAirQuality = e.Value;

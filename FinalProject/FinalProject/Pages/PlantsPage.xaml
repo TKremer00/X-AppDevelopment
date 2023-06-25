@@ -15,8 +15,14 @@
 
                 <mdc:TextField LabelText="Search for plant"
                                Grid.Column="0"
-                               Loaded="PlantSearchFieldLoaded"
+                               Loaded="PlantSearchFieldLoaded"                             
                                SupportingText=""/>
+
+                <Entry Grid.Column="0"
+                       BackgroundColor="Transparent" 
+                       Text="{Binding SearchPlantName}" 
+                       TextColor="Transparent" 
+                       Opacity="0"/>
 
                 <mdc:IconButton IconKind="Add" 
                                 Grid.Column="1"
@@ -28,7 +34,9 @@
         <mdc:Card Margin="0, 20, 0, 0" >
             <ScrollView Padding="10">
                 <VerticalStackLayout>
-                    <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
+                    <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" IsVisible="{Binding HasPlants}"/>
+
+                    <mdc:Label IsVisible="{Binding HasPlants, Converter={StaticResource booleanInverterConverter}}" Text="No plants have been found"/>
                 </VerticalStackLayout>
             </ScrollView>
         </mdc:Card>

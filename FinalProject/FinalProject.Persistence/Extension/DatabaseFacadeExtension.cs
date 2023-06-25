@@ -12,6 +12,13 @@ namespace FinalProject.Persistence.Extension
             var plantRepo = service.GetRequiredService<PlantRepository>();
             var plants = await plantRepo.GetAllAsync();
 
+            foreach (var plant in plants)
+            {
+                plantRepo.Remove(plant);
+            }
+            await plantRepo.SaveAsync();
+            plants = await plantRepo.GetAllAsync();
+
             if (!plants.Any())
             {
                 await plantRepo.AddAsync(new Plant

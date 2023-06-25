@@ -18,7 +18,7 @@ namespace FinalProject.Core.Helpers
         {
             const string DEFAULT_IMAGE = "https://cdn-icons-png.flaticon.com/512/45/45777.png";
 
-            var urlEscapedName = HttpUtility.UrlEncode(latinPlantname);
+            var urlEscapedName = Uri.EscapeDataString(latinPlantname);
             var request = new RestRequest($"/species-list?q={urlEscapedName}&key={API_KEY}");
             try
             {
@@ -26,7 +26,7 @@ namespace FinalProject.Core.Helpers
 
                 if (!response.data.Any())
                 {
-                    return string.Empty;
+                    return DEFAULT_IMAGE;
                 }
 
                 var data = response.data.First();
@@ -39,7 +39,7 @@ namespace FinalProject.Core.Helpers
 
                 return data.default_image.small_url;
             }
-            catch
+            catch(Exception e)
             {
                 return DEFAULT_IMAGE;
             }
