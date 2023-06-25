@@ -21,6 +21,15 @@
         <Setter Property="ForegroundColor" Value="{StaticResource SecondaryContainerColor}" />
     </Style>
 
+    <Style x:Key="HeaderLabelStyleDefaultLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource SecondaryContainerColor}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="6, 3" />
+    </Style>
+
     <Style TargetType="mdc:Card" BasedOn="{StaticResource FilledCardStyle}">
         <Setter Property="BackgroundColour" Value="{StaticResource OnBackgroundColor}" />
     </Style>

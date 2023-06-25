@@ -62,11 +62,11 @@
                 </mdc:Card.GestureRecognizers>
                 
                 <VerticalStackLayout>
-                    <Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="Recently added" Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyleDefaultLabel}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                     
                     <CollectionView ItemsSource="{Binding Plants}" SelectionMode="None" ItemTemplate="{StaticResource ObservablePlantTemplate}" />
                     
-                    <Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyle}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    <Label Text="Show more..." Margin="5, 0, 5, 0" Style="{StaticResource HeaderLabelStyleDefaultLabel}"  HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </VerticalStackLayout>
             </mdc:Card>
 
