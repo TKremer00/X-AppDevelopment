@@ -43,9 +43,10 @@ namespace FinalProject.Core.ViewModels
             IsLoading = false;
 
             await ToasterHelper.Show($"Saved {Plant.PlantName} to database");
-            
+
             // clear the old plant data
             Plant = new PlantValidation();
+            OnPropertyChanged(nameof(Plant));
 
             await RoutingHelper.NavigateBackAsync();
         }

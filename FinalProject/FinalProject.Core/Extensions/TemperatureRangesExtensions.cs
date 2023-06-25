@@ -12,6 +12,7 @@ namespace FinalProject.Core.Extensions
                 TemperatureRanges._0_till_10 => (0, 10),
                 TemperatureRanges._10_till_20 => (10, 20),
                 TemperatureRanges._20_till_30 => (20, 30),
+                TemperatureRanges._30_till_40 => (30, 40),
                 _ => throw new NotImplementedException(),
             };
         }

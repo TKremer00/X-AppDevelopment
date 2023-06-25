@@ -74,13 +74,7 @@ namespace FinalProject.Core.ValidationModels
         internal override Plant ConvertToModel()
         {
             var temperatureRange = Enum.GetValues<TemperatureRanges>()[TemperatureRanges.ChosenIndex];
-            var (minTemperature, maxTemperature) = temperatureRange switch
-            {
-                Data.Enums.TemperatureRanges._0_till_10 => (0, 10),
-                Data.Enums.TemperatureRanges._10_till_20 => (10, 20),
-                Data.Enums.TemperatureRanges._20_till_30 => (20, 30),
-                _ => throw new NotImplementedException(),
-            };
+            var (minTemperature, maxTemperature) = temperatureRange.GetTemperatures();
 
             var humidityRanges = Enum.GetValues<HumidityRanges>()[HumidityRanges.ChosenIndex];
             var (minHumidity, maxHumidity) = humidityRanges switch
