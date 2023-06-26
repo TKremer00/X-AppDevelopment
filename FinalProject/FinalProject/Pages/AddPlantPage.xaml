@@ -10,7 +10,6 @@
             <Label Text="{Binding}" TextColor="White" Background="Red" />
         </DataTemplate>
     </ContentPage.Resources>
-    <!-- TODO: change errors to use mdc (https://mdc-maui.github.io/text-field) -->
     <ScrollView Margin="5">
         <AbsoluteLayout>
             <VerticalStackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"

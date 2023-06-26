@@ -23,9 +23,7 @@ namespace FinalProject.Core.Services
             }
 
             await _repository.AddAsync(new Temperature() { Value = e.RawData });
-#if !DEBUG
             await _repository.SaveAsync();
-#endif
         }
 
         public Task<List<Temperature>> GetTemperaturesAsync() => _repository.GetAllAsync();
