@@ -12,14 +12,17 @@ namespace FinalProject.Core.ValidationModels
         private string _latinPlantName;
         private string _plantName;
 
-        public PlantValidation()
+        public PlantValidation() : this(Application.Current.GetRequiredService<IPreferencesWrapper>())
         {
-            var preferences = Application.Current.GetRequiredService<IPreferencesWrapper>();
+        }
+
+        public PlantValidation(IPreferencesWrapper preferences)
+        {
 
             var temperatureValues = Enum.GetValues<TemperatureRanges>()
                 .Select(x =>
                 {
-                    var (min, max) = x.GetPreferredTemperatures();
+                    var (min, max) = x.GetPreferredTemperatures(preferences);
                     return $"{min} till {max} {preferences.GetTemperatureUnit().GetSymbol()}";
                 }).ToArray();
 

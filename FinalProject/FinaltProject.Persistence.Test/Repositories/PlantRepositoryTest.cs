@@ -26,7 +26,7 @@ namespace FinaltProject.Persistence.Test.Repositories
 
 
             var mostRecent = await _repository.GetMostRecentAsync(3);
-            var expectedItems = plants.OrderByDescending(x => x.CreatedAt).Take(count).ToList();
+            var expectedItems = plants.OrderBy(x => x.CreatedAt).Take(count).ToList();
 
             Assert.Multiple(() =>
             {

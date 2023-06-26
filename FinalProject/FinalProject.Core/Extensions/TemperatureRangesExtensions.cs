@@ -1,5 +1,6 @@
 ﻿using FinalProject.Core.Converters;
 using FinalProject.Data.Enums;
+using FinalProject.Data.Interfaces;
 
 namespace FinalProject.Core.Extensions
 {
@@ -17,10 +18,10 @@ namespace FinalProject.Core.Extensions
             };
         }
 
-        public static (int Min, int Max) GetPreferredTemperatures(this TemperatureRanges temperatureRanges)
+        public static (int Min, int Max) GetPreferredTemperatures(this TemperatureRanges temperatureRanges, IPreferencesWrapper preferences)
         {
             var (min, max) = GetTemperatures(temperatureRanges);
-            var temperatureConverter = Application.Current.Handler.MauiContext.Services.GetRequiredService<TemperatureConverter>();
+            var temperatureConverter = new TemperatureConverter(preferences);
             return (temperatureConverter.Convert(min), temperatureConverter.Convert(max));
         }
     }
